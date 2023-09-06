@@ -1,6 +1,5 @@
 package com.bgs.market.view.controller;
 
-
 import com.bgs.market.transactional.service.DepartmentService;
 import com.bgs.market.view.dto.response.GetAllDepartmentsResponseDTO;
 import com.bgs.market.view.exception.Exception;

@@ -2,7 +2,6 @@ package com.bgs.market.view.controller;
 
 import com.bgs.market.transactional.service.ProductUnitService;
 import com.bgs.market.view.dto.request.CreateProductUnitRequestDTO;
-import com.bgs.market.view.dto.request.UpdateParameterRequestDTO;
 import com.bgs.market.view.dto.request.UpdateProductUnitRequestDTO;
 import com.bgs.market.view.dto.response.*;
 import com.bgs.market.view.exception.Exception;
