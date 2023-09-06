@@ -13,12 +13,9 @@ import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 @AllArgsConstructor
 public class ParameterServiceImpl implements ParameterService {
-
     private ParameterRepository parameterRepository;
 
     @Override
@@ -48,24 +45,6 @@ public class ParameterServiceImpl implements ParameterService {
     }
 
     @Override
-    public Parameter getParameterById(Long parameterId) {
-        Optional<Parameter> optionalParameter = parameterRepository.findById(parameterId);
-        return optionalParameter.get();
-    }
-
-    @Override
-    public GetAllParametersResponseDTO getAllParameters() throws Exception {
-        GetAllParametersResponseDTO responseDTO = new GetAllParametersResponseDTO();
-        responseDTO.setStatusCode("01");
-        responseDTO.setStatusMessage("OK");
-        responseDTO.setParameters(parameterRepository.findAll());
-
-        System.out.println("_response = " + new Gson().toJson(responseDTO));
-
-        return responseDTO;
-    }
-
-    @Override
     public UpdateParameterResponseDTO updateParameter(UpdateParameterRequestDTO request) {
         System.out.println("request = " + new Gson().toJson(request));
 
@@ -86,10 +65,29 @@ public class ParameterServiceImpl implements ParameterService {
 
         UpdateParameterResponseDTO responseDTO = new UpdateParameterResponseDTO();
         responseDTO.setStatusCode("01");
-        responseDTO.setStatusCode("OK");
+        responseDTO.setStatusMessage("OK");
         responseDTO.setParameter(parameter);
         System.out.println("response = " + new Gson().toJson(responseDTO));
         return responseDTO;
     }
 
+    @Override
+    public GetAllParametersResponseDTO getAllParameters() throws Exception {
+        GetAllParametersResponseDTO responseDTO = new GetAllParametersResponseDTO();
+        responseDTO.setStatusCode("01");
+        responseDTO.setStatusMessage("OK");
+        responseDTO.setParameters(parameterRepository.findAll());
+        System.out.println("_response = " + new Gson().toJson(responseDTO));
+        return responseDTO;
+    }
+
+    @Override
+    public GetAllParametersResponseDTO getAllParametersByParameterType(String type) throws Exception {
+        GetAllParametersResponseDTO responseDTO = new GetAllParametersResponseDTO();
+        responseDTO.setStatusCode("01");
+        responseDTO.setStatusMessage("OK");
+        responseDTO.setParameters(parameterRepository.getAllParametersByTypeQuery(type));
+        System.out.println("_response = " + new Gson().toJson(responseDTO));
+        return responseDTO;
+    }
 }
