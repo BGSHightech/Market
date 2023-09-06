@@ -28,6 +28,12 @@ public class ParameterController {
         return parameterService.getAllParameters();
     }
 
+    /**
+     * Example Url: localhost:8080/api/v1/parameter/byType?type=Tipo de documento de identidad
+     * @param type
+     * @return
+     * @throws Exception
+     */
     @GetMapping(path = "byType")
     public GetAllParametersResponseDTO getAllParametersByParameterType(@RequestParam("type") String type) throws Exception {
         return parameterService.getAllParametersByParameterType(type);

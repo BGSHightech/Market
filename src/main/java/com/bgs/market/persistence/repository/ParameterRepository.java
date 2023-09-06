@@ -9,9 +9,8 @@ import java.util.List;
 
 public interface ParameterRepository extends JpaRepository<Parameter, Long> {
 
-
     @Query("SELECT p FROM Parameter p WHERE " +
-            "p.parameterType LIKE CONCAT('%', :type, '%') " +
+            "p.parameterType = :type " +
             "AND p.state = 1")
     List<Parameter> getAllParametersByTypeQuery(String type) throws Exception;
 

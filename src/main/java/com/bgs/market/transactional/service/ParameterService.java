@@ -10,7 +10,7 @@ import com.bgs.market.view.exception.Exception;
 public interface ParameterService {
     CreateParameterResponseDTO createParameter(CreateParameterRequestDTO request) throws Exception;
 
-    UpdateParameterResponseDTO updateParameter(UpdateParameterRequestDTO request);
+    UpdateParameterResponseDTO updateParameter(UpdateParameterRequestDTO request) throws Exception;
 
     GetAllParametersResponseDTO getAllParameters() throws Exception;
 
