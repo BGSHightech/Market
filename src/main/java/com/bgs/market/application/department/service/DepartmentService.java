@@ -1,0 +1,25 @@
+package com.bgs.market.application.department.service;
+
+import com.bgs.market.application.department.view.dto.response.GetAllDepartmentsResponseDTO;
+import com.bgs.market.application.department.view.dto.response.GetDepartmentByIdResponseDTO;
+import com.bgs.market.exception.Exception;
+
+/**
+ * Class for DepartmentService.
+ */
+public interface DepartmentService {
+    /**
+     * Get list of departments.
+     *
+     * @return departments
+     */
+    GetAllDepartmentsResponseDTO getAllDepartments() throws Exception;
+
+    /**
+     * Get list of departments by id.
+     *
+     * @param departmentId represents departmentId
+     * @return departments
+     */
+    GetDepartmentByIdResponseDTO getDepartmentById(String departmentId);
+}
