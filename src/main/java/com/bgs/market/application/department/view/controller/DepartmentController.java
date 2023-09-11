@@ -30,7 +30,7 @@ public class DepartmentController {
     }
 
     /**
-     * Get list of departments by id.
+     * Get department by id.
      *
      * @param departmentId represents departmentId
      * @return departments

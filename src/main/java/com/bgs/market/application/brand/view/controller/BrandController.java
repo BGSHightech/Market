@@ -5,6 +5,7 @@ import com.bgs.market.application.brand.view.dto.request.CreateBrandRequestDTO;
 import com.bgs.market.application.brand.view.dto.request.UpdateBrandRequestDTO;
 import com.bgs.market.application.brand.view.dto.response.CreateBrandResponseDTO;
 import com.bgs.market.application.brand.view.dto.response.GetAllBrandsResponseDTO;
+import com.bgs.market.application.brand.view.dto.response.GetBrandByIdResponseDTO;
 import com.bgs.market.application.brand.view.dto.response.UpdateBrandResponseDTO;
 import com.bgs.market.exception.Exception;
 import lombok.AllArgsConstructor;
@@ -33,6 +34,11 @@ public class BrandController {
     @GetMapping
     public GetAllBrandsResponseDTO getAllBrands() throws Exception {
         return brandService.getAllBrands();
+    }
+
+    @GetMapping("{brandId}")
+    public GetBrandByIdResponseDTO getBrandById(@PathVariable("brandId") Long brandId) throws Exception {
+        return brandService.getBrandById(brandId);
     }
 
     /**

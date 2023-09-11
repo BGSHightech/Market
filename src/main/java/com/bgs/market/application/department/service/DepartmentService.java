@@ -16,7 +16,7 @@ public interface DepartmentService {
     GetAllDepartmentsResponseDTO getAllDepartments() throws Exception;
 
     /**
-     * Get list of departments by id.
+     * Get department by id.
      *
      * @param departmentId represents departmentId
      * @return departments

@@ -41,7 +41,7 @@ public class DistrictServiceImpl implements DistrictService {
     }
 
     /**
-     * Get list of districts by id.
+     * Get district by id.
      *
      * @param districtId represents districtId
      * @return districts

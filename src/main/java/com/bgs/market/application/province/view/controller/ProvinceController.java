@@ -30,7 +30,7 @@ public class ProvinceController {
     }
 
     /**
-     * Get list of provinces by id.
+     * Get province by id.
      *
      * @param provinceId represents provinceId
      * @return provinces

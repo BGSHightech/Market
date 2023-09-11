@@ -41,7 +41,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     /**
-     * Get list of departments by id.
+     * Get department by id.
      *
      * @param departmentId represents departmentId
      * @return departments

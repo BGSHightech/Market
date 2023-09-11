@@ -41,7 +41,7 @@ public class ProvinceServiceImpl implements ProvinceService {
     }
 
     /**
-     * Get list of provinces by id.
+     * Get province by id.
      *
      * @param provinceId represents provinceId
      * @return provinces

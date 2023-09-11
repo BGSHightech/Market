@@ -1,6 +1,7 @@
 package com.bgs.market.application.brand.service;
 
 import com.bgs.market.application.brand.persistence.Brand;
+import com.bgs.market.application.brand.view.dto.response.GetBrandByIdResponseDTO;
 import com.bgs.market.application.subfamily.persistence.SubFamily;
 import com.bgs.market.application.brand.persistence.BrandRepository;
 import com.bgs.market.application.subfamily.persistence.SubFamilyRepository;
@@ -40,6 +41,36 @@ public class BrandServiceImpl implements BrandService {
         responseDTO.setStatusCode("01");
         responseDTO.setStatusMessage("OK");
         responseDTO.setBrands(brandRepository.findAll());
+
+        // Show the result in the console and return the value.
+        System.out.println("response = " + new Gson().toJson(responseDTO));
+        return responseDTO;
+    }
+
+    /**
+     * Get list of brands by id.
+     *
+     * @param brandId represents brandId
+     * @return brands
+     */
+    @Override
+    public GetBrandByIdResponseDTO getBrandById(Long brandId) throws Exception {
+        // Show the request in the console.
+        System.out.println("request = " + new Gson().toJson(brandId));
+        GetBrandByIdResponseDTO responseDTO = new GetBrandByIdResponseDTO();
+
+        // Validate if brand exists.
+        Optional<Brand> optionalBrand = brandRepository.findById(brandId);
+        if (optionalBrand.isEmpty()) {
+            responseDTO.setStatusCode("02");
+            responseDTO.setStatusMessage("The brand doesn't exists");
+            return responseDTO;
+        }
+
+        // Assign values.
+        responseDTO.setStatusCode("01");
+        responseDTO.setStatusMessage("OK");
+        responseDTO.setBrand(optionalBrand.get());
 
         // Show the result in the console and return the value.
         System.out.println("response = " + new Gson().toJson(responseDTO));

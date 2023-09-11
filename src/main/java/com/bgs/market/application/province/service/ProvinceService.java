@@ -16,7 +16,7 @@ public interface ProvinceService {
     GetAllProvincesResponseDTO getAllProvinces() throws Exception;
 
     /**
-     * Get list of provinces by id.
+     * Get province by id.
      *
      * @param provinceId represents provinceId
      * @return provinces
