@@ -2,6 +2,7 @@ package com.bgs.market.application.category.service;
 
 import com.bgs.market.application.category.persistence.Category;
 import com.bgs.market.application.category.persistence.CategoryRepository;
+import com.bgs.market.application.category.view.dto.response.GetCategoryByIdResponseDTO;
 import com.bgs.market.application.subfamily.persistence.SubFamilyRepository;
 import com.bgs.market.application.category.view.dto.request.CreateCategoryRequestDTO;
 import com.bgs.market.application.category.view.dto.request.UpdateCategoryRequestDTO;
@@ -36,6 +37,37 @@ public class CategoryServiceImpl implements CategoryService {
         responseDTO.setStatusCode("01");
         responseDTO.setStatusMessage("OK");
         responseDTO.setCategories(categoryRepository.findAll());
+
+        // Show the result in the console and return the value.
+        System.out.println("response = " + new Gson().toJson(responseDTO));
+        return responseDTO;
+    }
+
+
+    /**
+     * Get category by id.
+     *
+     * @param categoryId represents categoryId
+     * @return category
+     */
+
+    @Override
+    public GetCategoryByIdResponseDTO getCategoryById(Long categoryId) throws Exception {
+        // Show the request in the console.
+        System.out.println("request = " + new Gson().toJson(categoryId));
+        GetCategoryByIdResponseDTO responseDTO = new GetCategoryByIdResponseDTO();
+
+        // Validate if category exists.
+        Optional<Category> optionalCategory = categoryRepository.findById(categoryId);
+        if (optionalCategory.isEmpty()){
+            responseDTO.setStatusCode("02");
+            responseDTO.setStatusMessage("The category doesn't exists");
+            return responseDTO;
+        }
+        // Assign values.
+        responseDTO.setStatusCode("01");
+        responseDTO.setStatusMessage("OK");
+        responseDTO.setCategory(optionalCategory.get());
 
         // Show the result in the console and return the value.
         System.out.println("response = " + new Gson().toJson(responseDTO));

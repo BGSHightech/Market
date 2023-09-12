@@ -1,9 +1,11 @@
 package com.bgs.market.application.family.service;
 
+import com.bgs.market.application.clienttype.view.dto.response.GetClientTypeByIdResponseDTO;
 import com.bgs.market.application.family.view.dto.request.CreateFamilyRequestDTO;
 import com.bgs.market.application.family.view.dto.request.UpdateFamilyRequestDTO;
 import com.bgs.market.application.family.view.dto.response.CreateFamilyResponseDTO;
 import com.bgs.market.application.family.view.dto.response.GetAllFamiliesResponseDTO;
+import com.bgs.market.application.family.view.dto.response.GetFamilyByIdResponseDTO;
 import com.bgs.market.application.family.view.dto.response.UpdateFamilyResponseDTO;
 import com.bgs.market.exception.Exception;
 
@@ -17,6 +19,14 @@ public interface FamilyService {
      * @return families
      */
     GetAllFamiliesResponseDTO getAllFamilies() throws Exception;
+
+    /**
+     * Get family by id.
+     *
+     * @param familyId represents familyId
+     * @return family
+     */
+    GetFamilyByIdResponseDTO getFamilyById(Long familyId) throws Exception;
 
     /**
      * Create family.

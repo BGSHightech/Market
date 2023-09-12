@@ -1,9 +1,11 @@
 package com.bgs.market.application.clienttype.service;
 
+import com.bgs.market.application.client.view.dto.response.GetClientByIdResponseDTO;
 import com.bgs.market.application.clienttype.view.dto.request.CreateClientTypeRequestDTO;
 import com.bgs.market.application.clienttype.view.dto.request.UpdateClientTypeRequestDTO;
 import com.bgs.market.application.clienttype.view.dto.response.CreateClientTypeResponseDTO;
 import com.bgs.market.application.clienttype.view.dto.response.GetAllClientTypesResponseDTO;
+import com.bgs.market.application.clienttype.view.dto.response.GetClientTypeByIdResponseDTO;
 import com.bgs.market.application.clienttype.view.dto.response.UpdateClientTypeResponseDTO;
 import com.bgs.market.exception.Exception;
 
@@ -17,6 +19,14 @@ public interface ClientTypeService {
      * @return client types
      */
     GetAllClientTypesResponseDTO getAllClientTypes() throws Exception;
+
+    /**
+     * Get client type by id.
+     *
+     * @param clientTypeId represents clientTypeId
+     * @return client type
+     */
+    GetClientTypeByIdResponseDTO getClientTypeById(Long clientTypeId) throws Exception;
 
     /**
      * Create client type.

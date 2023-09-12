@@ -4,6 +4,7 @@ import com.bgs.market.application.client.view.dto.request.CreateClientRequestDTO
 import com.bgs.market.application.client.view.dto.request.UpdateClientRequestDTO;
 import com.bgs.market.application.client.view.dto.response.CreateClientResponseDTO;
 import com.bgs.market.application.client.view.dto.response.GetAllClientsResponseDTO;
+import com.bgs.market.application.client.view.dto.response.GetClientByIdResponseDTO;
 import com.bgs.market.application.client.view.dto.response.UpdateClientResponseDTO;
 import com.bgs.market.exception.Exception;
 
@@ -17,6 +18,14 @@ public interface ClientService {
      * @return clients
      */
     GetAllClientsResponseDTO getAllClients() throws Exception;
+
+    /**
+     * Get client by id.
+     *
+     * @param clientId represents clientId
+     * @return client
+     */
+    GetClientByIdResponseDTO getClientById(Long clientId) throws Exception;
 
     /**
      * Create client.

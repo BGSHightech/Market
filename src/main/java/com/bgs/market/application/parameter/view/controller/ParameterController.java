@@ -1,10 +1,12 @@
 package com.bgs.market.application.parameter.view.controller;
 
+import com.bgs.market.application.family.view.dto.response.GetFamilyByIdResponseDTO;
 import com.bgs.market.application.parameter.service.ParameterService;
 import com.bgs.market.application.parameter.view.dto.request.CreateParameterRequestDTO;
 import com.bgs.market.application.parameter.view.dto.request.UpdateParameterRequestDTO;
 import com.bgs.market.application.parameter.view.dto.response.CreateParameterResponseDTO;
 import com.bgs.market.application.parameter.view.dto.response.GetAllParametersResponseDTO;
+import com.bgs.market.application.parameter.view.dto.response.GetParametersByIdResponseDTO;
 import com.bgs.market.application.parameter.view.dto.response.UpdateParameterResponseDTO;
 import com.bgs.market.exception.Exception;
 import lombok.AllArgsConstructor;
@@ -34,6 +36,17 @@ public class ParameterController {
     @GetMapping
     public GetAllParametersResponseDTO getAllParameters() throws Exception {
         return parameterService.getAllParameters();
+    }
+
+    /**
+     * Get parameter by id.
+     *
+     * @param parameterId represents parameterId
+     * @return parameter
+     */
+    @GetMapping("{parameterId}")
+    public GetParametersByIdResponseDTO getParameterById(@PathVariable("parameterId") Long parameterId) throws Exception {
+        return parameterService.getParameterById(parameterId);
     }
 
     /**

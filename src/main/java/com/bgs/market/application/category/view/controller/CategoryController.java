@@ -1,10 +1,12 @@
 package com.bgs.market.application.category.view.controller;
 
+import com.bgs.market.application.brand.view.dto.response.GetBrandByIdResponseDTO;
 import com.bgs.market.application.category.service.CategoryService;
 import com.bgs.market.application.category.view.dto.request.CreateCategoryRequestDTO;
 import com.bgs.market.application.category.view.dto.request.UpdateCategoryRequestDTO;
 import com.bgs.market.application.category.view.dto.response.CreateCategoryResponseDTO;
 import com.bgs.market.application.category.view.dto.response.GetAllCategorysResponseDTO;
+import com.bgs.market.application.category.view.dto.response.GetCategoryByIdResponseDTO;
 import com.bgs.market.application.category.view.dto.response.UpdateCategoryResponseDTO;
 import com.bgs.market.exception.Exception;
 import lombok.AllArgsConstructor;
@@ -36,11 +38,24 @@ public class CategoryController {
     }
 
     /**
+     * Get category by id.
+     *
+     * @param categoryId represents categoryId
+     * @return category
+     */
+
+    @GetMapping("{categoryId}")
+    public GetCategoryByIdResponseDTO getCategoryById(@PathVariable("categoryId") Long categoryId) throws Exception {
+        return categoryService.getCategoryById(categoryId);
+    }
+
+    /**
      * Create category.
      *
      * @param request represents CreateCategoryRequestDTO
      * @return category
      */
+
     @PostMapping
     public CreateCategoryResponseDTO createCategory(@RequestBody CreateCategoryRequestDTO request) throws Exception {
         return categoryService.createCategory(request);

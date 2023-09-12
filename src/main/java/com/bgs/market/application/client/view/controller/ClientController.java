@@ -1,10 +1,12 @@
 package com.bgs.market.application.client.view.controller;
 
+import com.bgs.market.application.category.view.dto.response.GetCategoryByIdResponseDTO;
 import com.bgs.market.application.client.service.ClientService;
 import com.bgs.market.application.client.view.dto.request.CreateClientRequestDTO;
 import com.bgs.market.application.client.view.dto.request.UpdateClientRequestDTO;
 import com.bgs.market.application.client.view.dto.response.CreateClientResponseDTO;
 import com.bgs.market.application.client.view.dto.response.GetAllClientsResponseDTO;
+import com.bgs.market.application.client.view.dto.response.GetClientByIdResponseDTO;
 import com.bgs.market.application.client.view.dto.response.UpdateClientResponseDTO;
 import com.bgs.market.exception.Exception;
 import lombok.AllArgsConstructor;
@@ -27,6 +29,17 @@ public class ClientController {
     @GetMapping()
     public GetAllClientsResponseDTO getAllClients() throws Exception {
         return clientService.getAllClients();
+    }
+
+    /**
+     * Get client by id.
+     *
+     * @param clientId represents clientId
+     * @return client
+     */
+    @GetMapping("{clientId}")
+    public GetClientByIdResponseDTO getClientById(@PathVariable("clientId") Long clientId) throws Exception {
+        return clientService.getClientById(clientId);
     }
 
     /**

@@ -1,6 +1,8 @@
 package com.bgs.market.application.family.service;
 
 import com.bgs.market.application.category.persistence.Category;
+import com.bgs.market.application.clienttype.persistence.ClientType;
+import com.bgs.market.application.clienttype.view.dto.response.GetClientTypeByIdResponseDTO;
 import com.bgs.market.application.family.persistence.Family;
 import com.bgs.market.application.category.persistence.CategoryRepository;
 import com.bgs.market.application.family.persistence.FamilyRepository;
@@ -8,6 +10,7 @@ import com.bgs.market.application.family.view.dto.request.CreateFamilyRequestDTO
 import com.bgs.market.application.family.view.dto.request.UpdateFamilyRequestDTO;
 import com.bgs.market.application.family.view.dto.response.CreateFamilyResponseDTO;
 import com.bgs.market.application.family.view.dto.response.GetAllFamiliesResponseDTO;
+import com.bgs.market.application.family.view.dto.response.GetFamilyByIdResponseDTO;
 import com.bgs.market.application.family.view.dto.response.UpdateFamilyResponseDTO;
 import com.bgs.market.exception.Exception;
 import com.google.gson.Gson;
@@ -40,6 +43,35 @@ public class FamilyServiceImpl implements FamilyService {
         responseDTO.setStatusCode("01");
         responseDTO.setStatusMessage("OK");
         responseDTO.setFamilies(familyRepository.findAll());
+
+        // Show the result in the console and return the value.
+        System.out.println("response = " + new Gson().toJson(responseDTO));
+        return responseDTO;
+    }
+
+    /**
+     * Get family by id.
+     *
+     * @param familyId represents familyId
+     * @return family
+     */
+    @Override
+    public GetFamilyByIdResponseDTO getFamilyById(Long familyId) throws Exception {
+        // Show the request in the console.
+        System.out.println("request = " + new Gson().toJson(familyId));
+        GetFamilyByIdResponseDTO responseDTO = new GetFamilyByIdResponseDTO();
+
+        // Validate if family exists.
+        Optional<Family> optionalFamily = familyRepository.findById(familyId);
+        if (optionalFamily.isEmpty()){
+            responseDTO.setStatusCode("02");
+            responseDTO.setStatusMessage("The family doesn't exists");
+            return responseDTO;
+        }
+        // Assign values.
+        responseDTO.setStatusCode("01");
+        responseDTO.setStatusMessage("OK");
+        responseDTO.setFamily(optionalFamily.get());
 
         // Show the result in the console and return the value.
         System.out.println("response = " + new Gson().toJson(responseDTO));

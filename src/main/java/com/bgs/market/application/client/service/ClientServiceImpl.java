@@ -1,11 +1,13 @@
 package com.bgs.market.application.client.service;
 
+import com.bgs.market.application.category.persistence.Category;
 import com.bgs.market.application.client.persistence.Client;
 import com.bgs.market.application.client.persistence.ClientRepository;
 import com.bgs.market.application.client.view.dto.request.CreateClientRequestDTO;
 import com.bgs.market.application.client.view.dto.request.UpdateClientRequestDTO;
 import com.bgs.market.application.client.view.dto.response.CreateClientResponseDTO;
 import com.bgs.market.application.client.view.dto.response.GetAllClientsResponseDTO;
+import com.bgs.market.application.client.view.dto.response.GetClientByIdResponseDTO;
 import com.bgs.market.application.client.view.dto.response.UpdateClientResponseDTO;
 import com.bgs.market.application.clienttype.persistence.ClientType;
 import com.bgs.market.application.clienttype.persistence.ClientTypeRepository;
@@ -47,6 +49,35 @@ public class ClientServiceImpl implements ClientService {
         responseDTO.setStatusCode("01");
         responseDTO.setStatusMessage("OK");
         responseDTO.setClients(clientRepository.findAll());
+
+        // Show the result in the console and return the value.
+        System.out.println("response = " + new Gson().toJson(responseDTO));
+        return responseDTO;
+    }
+
+    /**
+     * Get client by id.
+     *
+     * @param clientId represents clientId
+     * @return client
+     */
+    @Override
+    public GetClientByIdResponseDTO getClientById(Long clientId) throws Exception {
+        // Show the request in the console.
+        System.out.println("request = " + new Gson().toJson(clientId));
+        GetClientByIdResponseDTO responseDTO = new GetClientByIdResponseDTO();
+
+        // Validate if client exists.
+        Optional<Client> optionalClient = clientRepository.findById(clientId);
+        if (optionalClient.isEmpty()){
+            responseDTO.setStatusCode("02");
+            responseDTO.setStatusMessage("The client doesn't exists");
+            return responseDTO;
+        }
+        // Assign values.
+        responseDTO.setStatusCode("01");
+        responseDTO.setStatusMessage("OK");
+        responseDTO.setClient(optionalClient.get());
 
         // Show the result in the console and return the value.
         System.out.println("response = " + new Gson().toJson(responseDTO));
