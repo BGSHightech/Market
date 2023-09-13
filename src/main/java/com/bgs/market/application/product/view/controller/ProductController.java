@@ -5,6 +5,7 @@ import com.bgs.market.application.product.view.dto.request.CreateProductRequestD
 import com.bgs.market.application.product.view.dto.request.UpdateProductRequestDTO;
 import com.bgs.market.application.product.view.dto.response.CreateProductResponseDTO;
 import com.bgs.market.application.product.view.dto.response.GetAllProductsResponseDTO;
+import com.bgs.market.application.product.view.dto.response.GetProductByIdResponseDTO;
 import com.bgs.market.application.product.view.dto.response.UpdateProductResponseDTO;
 import com.bgs.market.exception.Exception;
 import lombok.AllArgsConstructor;
@@ -31,8 +32,19 @@ public class ProductController {
      * @return products
      */
     @GetMapping()
-    GetAllProductsResponseDTO getAllProducts() throws Exception {
+    public GetAllProductsResponseDTO getAllProducts() throws Exception {
         return productService.getAllProducts();
+    }
+
+    /**
+     * Get product by id.
+     *
+     * @param productId represents productId
+     * @return product
+     */
+    @GetMapping("{productId}")
+    public GetProductByIdResponseDTO getProductById(@PathVariable("productId") Long productId) throws Exception {
+        return productService.getProductById(productId);
     }
 
     /**
@@ -42,7 +54,7 @@ public class ProductController {
      * @return product
      */
     @PostMapping()
-    CreateProductResponseDTO createProduct(@RequestBody CreateProductRequestDTO request) throws Exception {
+    public CreateProductResponseDTO createProduct(@RequestBody CreateProductRequestDTO request) throws Exception {
         return productService.createProduct(request);
     }
 
@@ -54,8 +66,8 @@ public class ProductController {
      * @return product
      */
     @PutMapping("{productId}")
-    UpdateProductResponseDTO updateProduct(@PathVariable("productId") Long productId,
-                                           @RequestBody UpdateProductRequestDTO request) throws Exception {
+    public UpdateProductResponseDTO updateProduct(@PathVariable("productId") Long productId,
+                                                  @RequestBody UpdateProductRequestDTO request) throws Exception {
         request.setProductId(productId);
         return productService.updateProduct(request);
     }

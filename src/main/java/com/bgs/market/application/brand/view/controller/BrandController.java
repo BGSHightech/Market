@@ -36,6 +36,12 @@ public class BrandController {
         return brandService.getAllBrands();
     }
 
+    /**
+     * Get brand by id.
+     *
+     * @param brandId represents brandId
+     * @return brand
+     */
     @GetMapping("{brandId}")
     public GetBrandByIdResponseDTO getBrandById(@PathVariable("brandId") Long brandId) throws Exception {
         return brandService.getBrandById(brandId);

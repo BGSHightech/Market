@@ -68,6 +68,7 @@ public class FamilyServiceImpl implements FamilyService {
             responseDTO.setStatusMessage("The family doesn't exists");
             return responseDTO;
         }
+
         // Assign values.
         responseDTO.setStatusCode("01");
         responseDTO.setStatusMessage("OK");

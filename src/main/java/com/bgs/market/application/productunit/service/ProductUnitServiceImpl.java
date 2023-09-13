@@ -6,6 +6,7 @@ import com.bgs.market.application.productunit.view.dto.request.CreateProductUnit
 import com.bgs.market.application.productunit.view.dto.request.UpdateProductUnitRequestDTO;
 import com.bgs.market.application.productunit.view.dto.response.CreateProductUnitResponseDTO;
 import com.bgs.market.application.productunit.view.dto.response.GetAllProductUnitsResponseDTO;
+import com.bgs.market.application.productunit.view.dto.response.GetProductUnitByIdResponseDTO;
 import com.bgs.market.application.productunit.view.dto.response.UpdateProductUnitResponseDTO;
 import com.bgs.market.exception.Exception;
 import com.google.gson.Gson;
@@ -37,6 +38,36 @@ public class ProductUnitServiceImpl implements ProductUnitService {
         responseDTO.setStatusCode("01");
         responseDTO.setStatusMessage("OK");
         responseDTO.setProductUnits(productUnitRepository.findAll());
+
+        // Show the result in the console and return the value.
+        System.out.println("response = " + new Gson().toJson(responseDTO));
+        return responseDTO;
+    }
+
+    /**
+     * Get product unit by id.
+     *
+     * @param productUnitId represents productUnitId
+     * @return product unit
+     */
+    @Override
+    public GetProductUnitByIdResponseDTO getProductUnitById(Long productUnitId) throws Exception {
+        // Show the request in the console.
+        System.out.println("request = " + new Gson().toJson(productUnitId));
+        GetProductUnitByIdResponseDTO responseDTO = new GetProductUnitByIdResponseDTO();
+
+        // Validate if product unit exists
+        Optional<ProductUnit> optionalProductUnit = productUnitRepository.findById(productUnitId);
+        if (optionalProductUnit.isEmpty()) {
+            responseDTO.setStatusCode("02");
+            responseDTO.setStatusMessage("The product unit doesn't exists");
+            return responseDTO;
+        }
+
+        // Assign values.
+        responseDTO.setStatusCode("01");
+        responseDTO.setStatusMessage("OK");
+        responseDTO.setProductUnit(optionalProductUnit.get());
 
         // Show the result in the console and return the value.
         System.out.println("response = " + new Gson().toJson(responseDTO));

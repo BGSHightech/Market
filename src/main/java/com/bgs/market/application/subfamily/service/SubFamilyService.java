@@ -4,6 +4,7 @@ import com.bgs.market.application.subfamily.view.dto.request.CreateSubFamilyRequ
 import com.bgs.market.application.subfamily.view.dto.request.UpdateSubFamilyRequestDTO;
 import com.bgs.market.application.subfamily.view.dto.response.CreateSubFamilyResponseDTO;
 import com.bgs.market.application.subfamily.view.dto.response.GetAllSubFamiliesResponseDTO;
+import com.bgs.market.application.subfamily.view.dto.response.GetSubFamilyByIdResponseDTO;
 import com.bgs.market.application.subfamily.view.dto.response.UpdateSubFamilyResponseDTO;
 import com.bgs.market.exception.Exception;
 
@@ -17,6 +18,14 @@ public interface SubFamilyService {
      * @return subfamilies
      */
     GetAllSubFamiliesResponseDTO getAllSubFamilies() throws Exception;
+
+    /**
+     * Get subfamily by id.
+     *
+     * @param subFamilyId represents subFamilyId
+     * @return subfamily
+     */
+    GetSubFamilyByIdResponseDTO getSubFamilyById(Long subFamilyId) throws Exception;
 
     /**
      * Create subfamily.

@@ -4,6 +4,7 @@ import com.bgs.market.application.productunit.view.dto.request.CreateProductUnit
 import com.bgs.market.application.productunit.view.dto.request.UpdateProductUnitRequestDTO;
 import com.bgs.market.application.productunit.view.dto.response.CreateProductUnitResponseDTO;
 import com.bgs.market.application.productunit.view.dto.response.GetAllProductUnitsResponseDTO;
+import com.bgs.market.application.productunit.view.dto.response.GetProductUnitByIdResponseDTO;
 import com.bgs.market.application.productunit.view.dto.response.UpdateProductUnitResponseDTO;
 import com.bgs.market.exception.Exception;
 
@@ -17,6 +18,14 @@ public interface ProductUnitService {
      * @return product units
      */
     GetAllProductUnitsResponseDTO getAllProductUnits() throws Exception;
+
+    /**
+     * Get product unit by id.
+     *
+     * @param productUnitId represents productUnitId
+     * @return product unit
+     */
+    GetProductUnitByIdResponseDTO getProductUnitById(Long productUnitId) throws Exception;
 
     /**
      * Create product unit.

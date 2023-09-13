@@ -69,11 +69,12 @@ public class ClientServiceImpl implements ClientService {
 
         // Validate if client exists.
         Optional<Client> optionalClient = clientRepository.findById(clientId);
-        if (optionalClient.isEmpty()){
+        if (optionalClient.isEmpty()) {
             responseDTO.setStatusCode("02");
             responseDTO.setStatusMessage("The client doesn't exists");
             return responseDTO;
         }
+
         // Assign values.
         responseDTO.setStatusCode("01");
         responseDTO.setStatusMessage("OK");

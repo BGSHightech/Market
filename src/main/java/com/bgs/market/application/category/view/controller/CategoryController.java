@@ -43,7 +43,6 @@ public class CategoryController {
      * @param categoryId represents categoryId
      * @return category
      */
-
     @GetMapping("{categoryId}")
     public GetCategoryByIdResponseDTO getCategoryById(@PathVariable("categoryId") Long categoryId) throws Exception {
         return categoryService.getCategoryById(categoryId);

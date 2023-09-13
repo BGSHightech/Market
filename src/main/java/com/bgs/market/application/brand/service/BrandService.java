@@ -20,10 +20,10 @@ public interface BrandService {
     GetAllBrandsResponseDTO getAllBrands() throws Exception;
 
     /**
-     * Get list of brands by id.
+     * Get brand by id.
      *
      * @param brandId represents brandId
-     * @return brands
+     * @return brand
      */
     GetBrandByIdResponseDTO getBrandById(Long brandId) throws Exception;
 

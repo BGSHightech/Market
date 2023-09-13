@@ -25,9 +25,7 @@ public interface CategoryService {
      * @param categoryId represents categoryId
      * @return category
      */
-
     GetCategoryByIdResponseDTO getCategoryById(Long categoryId) throws Exception;
-
 
     /**
      * Create category.

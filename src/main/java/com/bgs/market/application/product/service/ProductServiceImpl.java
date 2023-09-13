@@ -10,6 +10,7 @@ import com.bgs.market.application.product.view.dto.request.CreateProductRequestD
 import com.bgs.market.application.product.view.dto.request.UpdateProductRequestDTO;
 import com.bgs.market.application.product.view.dto.response.CreateProductResponseDTO;
 import com.bgs.market.application.product.view.dto.response.GetAllProductsResponseDTO;
+import com.bgs.market.application.product.view.dto.response.GetProductByIdResponseDTO;
 import com.bgs.market.application.product.view.dto.response.UpdateProductResponseDTO;
 import com.bgs.market.exception.Exception;
 import com.google.gson.Gson;
@@ -43,6 +44,36 @@ public class ProductServiceImpl implements ProductService {
         responseDTO.setStatusCode("01");
         responseDTO.setStatusMessage("OK");
         responseDTO.setProducts(productRepository.findAll());
+
+        // Show the result in the console and return the value.
+        System.out.println("response = " + new Gson().toJson(responseDTO));
+        return responseDTO;
+    }
+
+    /**
+     * Get product by id.
+     *
+     * @param productId represents productId
+     * @return product
+     */
+    @Override
+    public GetProductByIdResponseDTO getProductById(Long productId) throws Exception {
+        // Show the request in the console.
+        System.out.println("request = " + new Gson().toJson(productId));
+        GetProductByIdResponseDTO responseDTO = new GetProductByIdResponseDTO();
+
+        // Validate if product exists
+        Optional<Product> optionalProduct = productRepository.findById(productId);
+        if (optionalProduct.isEmpty()) {
+            responseDTO.setStatusCode("02");
+            responseDTO.setStatusMessage("The product doesn't exists");
+            return responseDTO;
+        }
+
+        // Assign values.
+        responseDTO.setStatusCode("01");
+        responseDTO.setStatusMessage("OK");
+        responseDTO.setProduct(optionalProduct.get());
 
         // Show the result in the console and return the value.
         System.out.println("response = " + new Gson().toJson(responseDTO));

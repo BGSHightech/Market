@@ -5,6 +5,7 @@ import com.bgs.market.application.subfamily.view.dto.request.CreateSubFamilyRequ
 import com.bgs.market.application.subfamily.view.dto.request.UpdateSubFamilyRequestDTO;
 import com.bgs.market.application.subfamily.view.dto.response.CreateSubFamilyResponseDTO;
 import com.bgs.market.application.subfamily.view.dto.response.GetAllSubFamiliesResponseDTO;
+import com.bgs.market.application.subfamily.view.dto.response.GetSubFamilyByIdResponseDTO;
 import com.bgs.market.application.subfamily.view.dto.response.UpdateSubFamilyResponseDTO;
 import com.bgs.market.exception.Exception;
 import lombok.AllArgsConstructor;
@@ -33,6 +34,17 @@ public class SubFamilyController {
     @GetMapping
     public GetAllSubFamiliesResponseDTO getAllSubFamilies() throws Exception {
         return subFamilyService.getAllSubFamilies();
+    }
+
+    /**
+     * Get subfamily by id.
+     *
+     * @param subFamilyId represents subFamilyId
+     * @return subfamily
+     */
+    @GetMapping("{subFamilyId}")
+    public GetSubFamilyByIdResponseDTO getSubFamilyById(@PathVariable("subFamilyId") Long subFamilyId) throws Exception {
+        return subFamilyService.getSubFamilyById(subFamilyId);
     }
 
     /**

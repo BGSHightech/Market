@@ -8,6 +8,7 @@ import com.bgs.market.application.subfamily.view.dto.request.CreateSubFamilyRequ
 import com.bgs.market.application.subfamily.view.dto.request.UpdateSubFamilyRequestDTO;
 import com.bgs.market.application.subfamily.view.dto.response.CreateSubFamilyResponseDTO;
 import com.bgs.market.application.subfamily.view.dto.response.GetAllSubFamiliesResponseDTO;
+import com.bgs.market.application.subfamily.view.dto.response.GetSubFamilyByIdResponseDTO;
 import com.bgs.market.application.subfamily.view.dto.response.UpdateSubFamilyResponseDTO;
 import com.bgs.market.exception.Exception;
 import com.google.gson.Gson;
@@ -40,6 +41,36 @@ public class SubFamilyServiceImpl implements SubFamilyService {
         responseDTO.setStatusCode("01");
         responseDTO.setStatusMessage("OK");
         responseDTO.setSubFamilies(subFamilyRepository.findAll());
+
+        // Show the result in the console and return the value.
+        System.out.println("response = " + new Gson().toJson(responseDTO));
+        return responseDTO;
+    }
+
+    /**
+     * Get subfamily by id.
+     *
+     * @param subFamilyId represents subFamilyId
+     * @return subfamily
+     */
+    @Override
+    public GetSubFamilyByIdResponseDTO getSubFamilyById(Long subFamilyId) throws Exception {
+        // Show the request in the console.
+        System.out.println("request = " + new Gson().toJson(subFamilyId));
+        GetSubFamilyByIdResponseDTO responseDTO = new GetSubFamilyByIdResponseDTO();
+
+        // Validate if subfamily exists.
+        Optional<SubFamily> optionalSubFamily = subFamilyRepository.findById(subFamilyId);
+        if (optionalSubFamily.isEmpty()) {
+            responseDTO.setStatusCode("02");
+            responseDTO.setStatusMessage("The subfamily doesn't exists");
+            return responseDTO;
+        }
+
+        // Assign values.
+        responseDTO.setStatusCode("01");
+        responseDTO.setStatusMessage("OK");
+        responseDTO.setSubFamily(optionalSubFamily.get());
 
         // Show the result in the console and return the value.
         System.out.println("response = " + new Gson().toJson(responseDTO));

@@ -78,7 +78,7 @@ public class ParameterServiceImpl implements ParameterService {
         System.out.println("request = " + new Gson().toJson(parameterId));
         GetParametersByIdResponseDTO responseDTO = new GetParametersByIdResponseDTO();
 
-        // Validate if family exists.
+        // Validate if parameter exists.
         Optional<Parameter> optionalParameter = parameterRepository.findById(parameterId);
         if (optionalParameter.isEmpty()){
             responseDTO.setStatusCode("02");

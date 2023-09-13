@@ -5,6 +5,7 @@ import com.bgs.market.application.productunit.view.dto.request.CreateProductUnit
 import com.bgs.market.application.productunit.view.dto.request.UpdateProductUnitRequestDTO;
 import com.bgs.market.application.productunit.view.dto.response.CreateProductUnitResponseDTO;
 import com.bgs.market.application.productunit.view.dto.response.GetAllProductUnitsResponseDTO;
+import com.bgs.market.application.productunit.view.dto.response.GetProductUnitByIdResponseDTO;
 import com.bgs.market.application.productunit.view.dto.response.UpdateProductUnitResponseDTO;
 import com.bgs.market.exception.Exception;
 import lombok.AllArgsConstructor;
@@ -33,6 +34,17 @@ public class ProductUnitController {
     @GetMapping
     public GetAllProductUnitsResponseDTO getAllProductUnits() throws Exception {
         return productUnitService.getAllProductUnits();
+    }
+
+    /**
+     * Get product unit by id.
+     *
+     * @param productUnitId represents productUnitId
+     * @return product unit
+     */
+    @GetMapping("{productUnitId}")
+    public GetProductUnitByIdResponseDTO getProductUnitById(@PathVariable("productUnitId") Long productUnitId) throws Exception {
+        return productUnitService.getProductUnitById(productUnitId);
     }
 
     /**

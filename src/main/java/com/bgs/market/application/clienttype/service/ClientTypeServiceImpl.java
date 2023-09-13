@@ -47,10 +47,10 @@ public class ClientTypeServiceImpl implements ClientTypeService {
     }
 
     /**
-     * Get clientType by id.
+     * Get client type by id.
      *
      * @param clientTypeId represents clientTypeId
-     * @return clientType
+     * @return client type
      */
     @Override
     public GetClientTypeByIdResponseDTO getClientTypeById(Long clientTypeId) throws Exception {
@@ -58,13 +58,14 @@ public class ClientTypeServiceImpl implements ClientTypeService {
         System.out.println("request = " + new Gson().toJson(clientTypeId));
         GetClientTypeByIdResponseDTO responseDTO = new GetClientTypeByIdResponseDTO();
 
-        // Validate if clientType exists.
+        // Validate if client type exists.
         Optional<ClientType> optionalClientType = clientTypeRepository.findById(clientTypeId);
         if (optionalClientType.isEmpty()){
             responseDTO.setStatusCode("02");
-            responseDTO.setStatusMessage("The clientType doesn't exists");
+            responseDTO.setStatusMessage("The client type doesn't exists");
             return responseDTO;
         }
+
         // Assign values.
         responseDTO.setStatusCode("01");
         responseDTO.setStatusMessage("OK");

@@ -48,10 +48,10 @@ public class BrandServiceImpl implements BrandService {
     }
 
     /**
-     * Get list of brands by id.
+     * Get brand by id.
      *
      * @param brandId represents brandId
-     * @return brands
+     * @return brand
      */
     @Override
     public GetBrandByIdResponseDTO getBrandById(Long brandId) throws Exception {

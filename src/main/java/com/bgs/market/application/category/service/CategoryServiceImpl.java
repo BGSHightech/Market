@@ -50,7 +50,6 @@ public class CategoryServiceImpl implements CategoryService {
      * @param categoryId represents categoryId
      * @return category
      */
-
     @Override
     public GetCategoryByIdResponseDTO getCategoryById(Long categoryId) throws Exception {
         // Show the request in the console.
@@ -59,11 +58,12 @@ public class CategoryServiceImpl implements CategoryService {
 
         // Validate if category exists.
         Optional<Category> optionalCategory = categoryRepository.findById(categoryId);
-        if (optionalCategory.isEmpty()){
+        if (optionalCategory.isEmpty()) {
             responseDTO.setStatusCode("02");
             responseDTO.setStatusMessage("The category doesn't exists");
             return responseDTO;
         }
+
         // Assign values.
         responseDTO.setStatusCode("01");
         responseDTO.setStatusMessage("OK");

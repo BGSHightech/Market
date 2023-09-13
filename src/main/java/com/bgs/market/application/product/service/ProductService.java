@@ -4,6 +4,7 @@ import com.bgs.market.application.product.view.dto.request.CreateProductRequestD
 import com.bgs.market.application.product.view.dto.request.UpdateProductRequestDTO;
 import com.bgs.market.application.product.view.dto.response.CreateProductResponseDTO;
 import com.bgs.market.application.product.view.dto.response.GetAllProductsResponseDTO;
+import com.bgs.market.application.product.view.dto.response.GetProductByIdResponseDTO;
 import com.bgs.market.application.product.view.dto.response.UpdateProductResponseDTO;
 import com.bgs.market.exception.Exception;
 
@@ -17,6 +18,14 @@ public interface ProductService {
      * @return products
      */
     GetAllProductsResponseDTO getAllProducts() throws Exception;
+
+    /**
+     * Get product by id.
+     *
+     * @param productId represents productId
+     * @return product
+     */
+    GetProductByIdResponseDTO getProductById(Long productId) throws Exception;
 
     /**
      * Create product.

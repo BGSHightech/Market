@@ -38,10 +38,10 @@ public class ClientTypeController {
     }
 
     /**
-     * Get clientType by id.
+     * Get client type by id.
      *
      * @param clientTypeId represents clientTypeId
-     * @return clientType
+     * @return client type
      */
     @GetMapping("{clientTypeId}")
     public GetClientTypeByIdResponseDTO getClientTypeById(@PathVariable("clientTypeId") Long clientTypeId) throws Exception {
