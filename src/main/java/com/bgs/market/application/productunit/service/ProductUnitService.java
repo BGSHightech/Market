@@ -6,7 +6,6 @@ import com.bgs.market.application.productunit.view.dto.response.CreateProductUni
 import com.bgs.market.application.productunit.view.dto.response.GetAllProductUnitsResponseDTO;
 import com.bgs.market.application.productunit.view.dto.response.GetProductUnitByIdResponseDTO;
 import com.bgs.market.application.productunit.view.dto.response.UpdateProductUnitResponseDTO;
-import com.bgs.market.exception.Exception;
 
 /**
  * Class for ProductUnitService.
@@ -38,8 +37,10 @@ public interface ProductUnitService {
     /**
      * Update product unit.
      *
-     * @param request represents UpdateProductUnitRequestDTO
+     * @param request       represents UpdateProductUnitRequestDTO
+     * @param productUnitId represents productUnitId
      * @return product unit
      */
-    UpdateProductUnitResponseDTO updateProductUnit(UpdateProductUnitRequestDTO request) throws Exception;
+    UpdateProductUnitResponseDTO updateProductUnit(UpdateProductUnitRequestDTO request,
+                                                   Long productUnitId) throws Exception;
 }

@@ -7,7 +7,7 @@ import com.bgs.market.application.productunit.view.dto.response.CreateProductUni
 import com.bgs.market.application.productunit.view.dto.response.GetAllProductUnitsResponseDTO;
 import com.bgs.market.application.productunit.view.dto.response.GetProductUnitByIdResponseDTO;
 import com.bgs.market.application.productunit.view.dto.response.UpdateProductUnitResponseDTO;
-import com.bgs.market.exception.Exception;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @AllArgsConstructor
-@RequestMapping("api/v1/productunit")
+@RequestMapping("api/v1/product-unit")
 public class ProductUnitController {
     private ProductUnitService productUnitService;
 
@@ -54,7 +54,7 @@ public class ProductUnitController {
      * @return product unit
      */
     @PostMapping
-    public CreateProductUnitResponseDTO createProductUnit(@RequestBody CreateProductUnitRequestDTO request) throws Exception {
+    public CreateProductUnitResponseDTO createProductUnit(@Valid @RequestBody CreateProductUnitRequestDTO request) throws Exception {
         return productUnitService.createProductUnit(request);
     }
 
@@ -67,8 +67,7 @@ public class ProductUnitController {
      */
     @PutMapping("{productUnitId}")
     public UpdateProductUnitResponseDTO updateProductUnitResponseDTO(@PathVariable("productUnitId") Long productUnitId,
-                                                                     @RequestBody UpdateProductUnitRequestDTO request) throws Exception {
-        request.setProductUnitId(productUnitId);
-        return productUnitService.updateProductUnit(request);
+                                                                     @Valid @RequestBody UpdateProductUnitRequestDTO request) throws Exception {
+        return productUnitService.updateProductUnit(request, productUnitId);
     }
 }

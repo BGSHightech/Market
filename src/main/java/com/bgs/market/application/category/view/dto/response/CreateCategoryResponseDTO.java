@@ -5,6 +5,9 @@ import com.bgs.market.util.BaseResponseDTO;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Class for CreateCategoryResponseDTO.
+ */
 @Getter
 @Setter
 public class CreateCategoryResponseDTO extends BaseResponseDTO {

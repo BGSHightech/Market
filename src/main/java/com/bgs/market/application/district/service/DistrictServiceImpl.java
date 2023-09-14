@@ -4,7 +4,6 @@ import com.bgs.market.application.district.persistence.District;
 import com.bgs.market.application.district.persistence.DistrictRepository;
 import com.bgs.market.application.district.view.dto.response.GetAllDistrictsResponseDTO;
 import com.bgs.market.application.district.view.dto.response.GetDistrictByIdResponseDTO;
-import com.bgs.market.exception.Exception;
 import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,7 +27,7 @@ public class DistrictServiceImpl implements DistrictService {
      * @return districts
      */
     @Override
-    public GetAllDistrictsResponseDTO getAllDistricts() throws Exception {
+    public GetAllDistrictsResponseDTO getAllDistricts() {
         // Assign value and find all districts.
         GetAllDistrictsResponseDTO responseDTO = new GetAllDistrictsResponseDTO();
         responseDTO.setStatusCode("01");
@@ -47,7 +46,7 @@ public class DistrictServiceImpl implements DistrictService {
      * @return districts
      */
     @Override
-    public GetDistrictByIdResponseDTO getDistrictById(String districtId) throws Exception {
+    public GetDistrictByIdResponseDTO getDistrictById(String districtId) {
         // Show the request in the console.
         System.out.println("request = " + new Gson().toJson(districtId));
         GetDistrictByIdResponseDTO responseDTO = new GetDistrictByIdResponseDTO();
@@ -55,8 +54,9 @@ public class DistrictServiceImpl implements DistrictService {
         // Verify if district exists
         Optional<District> optionalDistrict = districtRepository.findById(districtId);
         if (optionalDistrict.isEmpty()) {
-            responseDTO.setStatusCode("02");
+            responseDTO.setStatusCode("99");
             responseDTO.setStatusMessage("The district doesn't exists");
+            System.out.println("response = " + new Gson().toJson(responseDTO));
             return responseDTO;
         }
 

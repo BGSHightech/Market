@@ -1,6 +1,5 @@
 package com.bgs.market.application.parameter.view.controller;
 
-import com.bgs.market.application.family.view.dto.response.GetFamilyByIdResponseDTO;
 import com.bgs.market.application.parameter.service.ParameterService;
 import com.bgs.market.application.parameter.view.dto.request.CreateParameterRequestDTO;
 import com.bgs.market.application.parameter.view.dto.request.UpdateParameterRequestDTO;
@@ -8,7 +7,7 @@ import com.bgs.market.application.parameter.view.dto.response.CreateParameterRes
 import com.bgs.market.application.parameter.view.dto.response.GetAllParametersResponseDTO;
 import com.bgs.market.application.parameter.view.dto.response.GetParametersByIdResponseDTO;
 import com.bgs.market.application.parameter.view.dto.response.UpdateParameterResponseDTO;
-import com.bgs.market.exception.Exception;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -67,7 +66,7 @@ public class ParameterController {
      * @return parameter
      */
     @PostMapping
-    public CreateParameterResponseDTO createParameter(@RequestBody CreateParameterRequestDTO request) throws Exception {
+    public CreateParameterResponseDTO createParameter(@Valid @RequestBody CreateParameterRequestDTO request) throws Exception {
         return parameterService.createParameter(request);
     }
 
@@ -80,8 +79,7 @@ public class ParameterController {
      */
     @PutMapping("{parameterId}")
     public UpdateParameterResponseDTO updateParameter(@PathVariable("parameterId") Long parameterId,
-                                                      @RequestBody UpdateParameterRequestDTO request) throws Exception {
-        request.setParameterId(parameterId);
-        return parameterService.updateParameter(request);
+                                                      @Valid @RequestBody UpdateParameterRequestDTO request) throws Exception {
+        return parameterService.updateParameter(request, parameterId);
     }
 }

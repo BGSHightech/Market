@@ -1,6 +1,5 @@
 package com.bgs.market.application.family.view.controller;
 
-import com.bgs.market.application.clienttype.view.dto.response.GetClientTypeByIdResponseDTO;
 import com.bgs.market.application.family.service.FamilyService;
 import com.bgs.market.application.family.view.dto.request.CreateFamilyRequestDTO;
 import com.bgs.market.application.family.view.dto.request.UpdateFamilyRequestDTO;
@@ -8,7 +7,7 @@ import com.bgs.market.application.family.view.dto.response.CreateFamilyResponseD
 import com.bgs.market.application.family.view.dto.response.GetAllFamiliesResponseDTO;
 import com.bgs.market.application.family.view.dto.response.GetFamilyByIdResponseDTO;
 import com.bgs.market.application.family.view.dto.response.UpdateFamilyResponseDTO;
-import com.bgs.market.exception.Exception;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -55,7 +54,7 @@ public class FamilyController {
      * @return family
      */
     @PostMapping
-    public CreateFamilyResponseDTO createFamily(@RequestBody CreateFamilyRequestDTO request) throws Exception {
+    public CreateFamilyResponseDTO createFamily(@Valid @RequestBody CreateFamilyRequestDTO request) throws Exception {
         return FamilyService.createFamily(request);
     }
 
@@ -68,8 +67,7 @@ public class FamilyController {
      */
     @PutMapping("{familyId}")
     public UpdateFamilyResponseDTO updateFamilyResponseDTO(@PathVariable("familyId") Long familyId,
-                                                           @RequestBody UpdateFamilyRequestDTO request) throws Exception {
-        request.setFamilyId(familyId);
-        return FamilyService.updateFamily(request);
+                                                           @Valid @RequestBody UpdateFamilyRequestDTO request) throws Exception {
+        return FamilyService.updateFamily(request, familyId);
     }
 }

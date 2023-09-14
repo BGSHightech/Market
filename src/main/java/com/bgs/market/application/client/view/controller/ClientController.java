@@ -1,6 +1,5 @@
 package com.bgs.market.application.client.view.controller;
 
-import com.bgs.market.application.category.view.dto.response.GetCategoryByIdResponseDTO;
 import com.bgs.market.application.client.service.ClientService;
 import com.bgs.market.application.client.view.dto.request.CreateClientRequestDTO;
 import com.bgs.market.application.client.view.dto.request.UpdateClientRequestDTO;
@@ -8,7 +7,7 @@ import com.bgs.market.application.client.view.dto.response.CreateClientResponseD
 import com.bgs.market.application.client.view.dto.response.GetAllClientsResponseDTO;
 import com.bgs.market.application.client.view.dto.response.GetClientByIdResponseDTO;
 import com.bgs.market.application.client.view.dto.response.UpdateClientResponseDTO;
-import com.bgs.market.exception.Exception;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,7 +48,7 @@ public class ClientController {
      * @return client
      */
     @PostMapping()
-    public CreateClientResponseDTO createClient(@RequestBody CreateClientRequestDTO request) throws Exception {
+    public CreateClientResponseDTO createClient(@Valid @RequestBody CreateClientRequestDTO request) throws Exception {
         return clientService.createClient(request);
     }
 
@@ -63,8 +62,7 @@ public class ClientController {
      */
     @PutMapping("{clientId}")
     public UpdateClientResponseDTO updateClient(@PathVariable("clientId") Long clientId,
-                                                @RequestBody UpdateClientRequestDTO request) throws Exception {
-        request.setClientId(clientId);
-        return clientService.updateClient(request);
+                                                @Valid @RequestBody UpdateClientRequestDTO request) throws Exception {
+        return clientService.updateClient(request, clientId);
     }
 }

@@ -3,7 +3,6 @@ package com.bgs.market.application.province.view.controller;
 import com.bgs.market.application.province.service.ProvinceService;
 import com.bgs.market.application.province.view.dto.response.GetAllProvincesResponseDTO;
 import com.bgs.market.application.province.view.dto.response.GetProvinceByIdResponseDTO;
-import com.bgs.market.exception.Exception;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

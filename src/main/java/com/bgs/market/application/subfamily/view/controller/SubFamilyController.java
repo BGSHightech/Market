@@ -7,7 +7,7 @@ import com.bgs.market.application.subfamily.view.dto.response.CreateSubFamilyRes
 import com.bgs.market.application.subfamily.view.dto.response.GetAllSubFamiliesResponseDTO;
 import com.bgs.market.application.subfamily.view.dto.response.GetSubFamilyByIdResponseDTO;
 import com.bgs.market.application.subfamily.view.dto.response.UpdateSubFamilyResponseDTO;
-import com.bgs.market.exception.Exception;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -54,7 +54,7 @@ public class SubFamilyController {
      * @return subfamily
      */
     @PostMapping
-    public CreateSubFamilyResponseDTO createSubFamily(@RequestBody CreateSubFamilyRequestDTO request) throws Exception {
+    public CreateSubFamilyResponseDTO createSubFamily(@Valid @RequestBody CreateSubFamilyRequestDTO request) throws Exception {
         return subFamilyService.createSubFamily(request);
     }
 
@@ -67,8 +67,7 @@ public class SubFamilyController {
      */
     @PutMapping("{subFamilyId}")
     public UpdateSubFamilyResponseDTO updateSubFamilyResponseDTO(@PathVariable("subFamilyId") Long subFamilyId,
-                                                                 @RequestBody UpdateSubFamilyRequestDTO request) throws Exception {
-        request.setSubFamilyId(subFamilyId);
-        return subFamilyService.updateSubFamily(request);
+                                                                 @Valid @RequestBody UpdateSubFamilyRequestDTO request) throws Exception {
+        return subFamilyService.updateSubFamily(request, subFamilyId);
     }
 }

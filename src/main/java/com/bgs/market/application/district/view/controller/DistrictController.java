@@ -3,7 +3,6 @@ package com.bgs.market.application.district.view.controller;
 import com.bgs.market.application.district.service.DistrictService;
 import com.bgs.market.application.district.view.dto.response.GetAllDistrictsResponseDTO;
 import com.bgs.market.application.district.view.dto.response.GetDistrictByIdResponseDTO;
-import com.bgs.market.exception.Exception;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

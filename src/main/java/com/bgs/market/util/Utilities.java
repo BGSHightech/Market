@@ -1,10 +1,15 @@
 package com.bgs.market.util;
 
 import org.springframework.context.MessageSource;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class Utilities {
@@ -14,9 +19,9 @@ public class Utilities {
 
     /**
      * Get message i18n with Local.Default
-     * @param messageSource
-     * @param message
-     * @return
+     * @param messageSource represents messageSource
+     * @param message represents message
+     * @return messageSource
      */
     public static String getMessage(MessageSource messageSource, String message){
         return messageSource.getMessage(message, null, Locale.getDefault());
@@ -24,10 +29,10 @@ public class Utilities {
 
     /**
      * Get message i18n with Local.Default and params
-     * @param messageSource
-     * @param param
-     * @param message
-     * @return
+     * @param messageSource represents messageSource
+     * @param param represents param
+     * @param message represents message
+     * @return messageSource
      */
     public static String getMessage(MessageSource messageSource, Object[] param, String message){
         return messageSource.getMessage(message, param, Locale.getDefault());
@@ -35,10 +40,9 @@ public class Utilities {
 
     /**
      * Get date with format and convert to String value
-     * @param date
-     * @param format
+     * @param date represents date
+     * @param format represents format
      * @return String value
-     * @throws Exception
      */
     public static String dateToString(Date date, String format) throws Exception {
         SimpleDateFormat sdf = new SimpleDateFormat(format);
@@ -47,8 +51,8 @@ public class Utilities {
 
     /**
      * Get date with format and convert to Date value
-     * @param date
-     * @param format
+     * @param date represents date
+     * @param format represents format
      * @return Date value
      */
     public static Date stringToDate(String date, String format){

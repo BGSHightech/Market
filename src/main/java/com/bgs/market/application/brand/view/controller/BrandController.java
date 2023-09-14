@@ -7,7 +7,7 @@ import com.bgs.market.application.brand.view.dto.response.CreateBrandResponseDTO
 import com.bgs.market.application.brand.view.dto.response.GetAllBrandsResponseDTO;
 import com.bgs.market.application.brand.view.dto.response.GetBrandByIdResponseDTO;
 import com.bgs.market.application.brand.view.dto.response.UpdateBrandResponseDTO;
-import com.bgs.market.exception.Exception;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -54,7 +54,7 @@ public class BrandController {
      * @return brand
      */
     @PostMapping
-    public CreateBrandResponseDTO createBrand(@RequestBody CreateBrandRequestDTO request) throws Exception {
+    public CreateBrandResponseDTO createBrand(@Valid @RequestBody CreateBrandRequestDTO request) throws Exception {
         return brandService.createBrand(request);
     }
 
@@ -67,8 +67,7 @@ public class BrandController {
      */
     @PutMapping("{brandId}")
     public UpdateBrandResponseDTO updateBrandResponseDTO(@PathVariable("brandId") Long brandId,
-                                                         @RequestBody UpdateBrandRequestDTO request) throws Exception {
-        request.setBrandId(brandId);
-        return brandService.updateBrand(request);
+                                                         @Valid @RequestBody UpdateBrandRequestDTO request) throws Exception {
+        return brandService.updateBrand(request, brandId);
     }
 }

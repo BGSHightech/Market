@@ -12,7 +12,8 @@ import com.bgs.market.application.product.view.dto.response.CreateProductRespons
 import com.bgs.market.application.product.view.dto.response.GetAllProductsResponseDTO;
 import com.bgs.market.application.product.view.dto.response.GetProductByIdResponseDTO;
 import com.bgs.market.application.product.view.dto.response.UpdateProductResponseDTO;
-import com.bgs.market.exception.Exception;
+import com.bgs.market.application.productunit.persistence.ProductUnit;
+import com.bgs.market.application.productunit.persistence.ProductUnitRepository;
 import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,7 @@ public class ProductServiceImpl implements ProductService {
     ProductRepository productRepository;
     BrandRepository brandRepository;
     ParameterRepository parameterRepository;
+    ProductUnitRepository productUnitRepository;
 
     /**
      * Get list of products.
@@ -38,7 +40,7 @@ public class ProductServiceImpl implements ProductService {
      * @return products
      */
     @Override
-    public GetAllProductsResponseDTO getAllProducts() throws Exception {
+    public GetAllProductsResponseDTO getAllProducts() {
         // Assign value and find all products.
         GetAllProductsResponseDTO responseDTO = new GetAllProductsResponseDTO();
         responseDTO.setStatusCode("01");
@@ -57,7 +59,7 @@ public class ProductServiceImpl implements ProductService {
      * @return product
      */
     @Override
-    public GetProductByIdResponseDTO getProductById(Long productId) throws Exception {
+    public GetProductByIdResponseDTO getProductById(Long productId) {
         // Show the request in the console.
         System.out.println("request = " + new Gson().toJson(productId));
         GetProductByIdResponseDTO responseDTO = new GetProductByIdResponseDTO();
@@ -65,8 +67,9 @@ public class ProductServiceImpl implements ProductService {
         // Validate if product exists
         Optional<Product> optionalProduct = productRepository.findById(productId);
         if (optionalProduct.isEmpty()) {
-            responseDTO.setStatusCode("02");
+            responseDTO.setStatusCode("99");
             responseDTO.setStatusMessage("The product doesn't exists");
+            System.out.println("response = " + new Gson().toJson(responseDTO));
             return responseDTO;
         }
 
@@ -87,7 +90,7 @@ public class ProductServiceImpl implements ProductService {
      * @return product
      */
     @Override
-    public CreateProductResponseDTO createProduct(CreateProductRequestDTO request) throws Exception {
+    public CreateProductResponseDTO createProduct(CreateProductRequestDTO request) {
         // Show the request in the console.
         System.out.println("request = " + new Gson().toJson(request));
         CreateProductResponseDTO responseDTO = new CreateProductResponseDTO();
@@ -95,48 +98,54 @@ public class ProductServiceImpl implements ProductService {
         // Validate if brand exists
         Optional<Brand> optionalBrand = brandRepository.findById(request.getBrandId());
         if (optionalBrand.isEmpty()) {
-            responseDTO.setStatusCode("02");
+            responseDTO.setStatusCode("99");
             responseDTO.setStatusMessage("The brand doesn't exists");
+            System.out.println("response = " + new Gson().toJson(responseDTO));
             return responseDTO;
         }
 
         // Validate if product type exists
         Optional<Parameter> optionalProductType = parameterRepository.findById(request.getProductType());
         if (optionalProductType.isEmpty()) {
-            responseDTO.setStatusCode("02");
+            responseDTO.setStatusCode("99");
             responseDTO.setStatusMessage("The product type doesn't exists");
+            System.out.println("response = " + new Gson().toJson(responseDTO));
             return responseDTO;
         }
 
         // Validate if unit type exists
         Optional<Parameter> optionalUnitType = parameterRepository.findById(request.getUnitType());
         if (optionalUnitType.isEmpty()) {
-            responseDTO.setStatusCode("02");
+            responseDTO.setStatusCode("99");
             responseDTO.setStatusMessage("The unit type doesn't exists");
+            System.out.println("response = " + new Gson().toJson(responseDTO));
             return responseDTO;
         }
 
         // Validate if main product unit exists
-        Optional<Parameter> optionalMainProductUnit = parameterRepository.findById(request.getMainProductUnitId());
+        Optional<ProductUnit> optionalMainProductUnit = productUnitRepository.findById(request.getMainProductUnitId());
         if (optionalMainProductUnit.isEmpty()) {
-            responseDTO.setStatusCode("02");
+            responseDTO.setStatusCode("99");
             responseDTO.setStatusMessage("The main product unit doesn't exists");
+            System.out.println("response = " + new Gson().toJson(responseDTO));
             return responseDTO;
         }
 
         // Validate if secondary product unit exists
-        Optional<Parameter> optionalSecondaryProductUnit = parameterRepository.findById(request.getSecondaryProductUnitId());
+        Optional<ProductUnit> optionalSecondaryProductUnit = productUnitRepository.findById(request.getSecondaryProductUnitId());
         if (optionalSecondaryProductUnit.isEmpty()) {
-            responseDTO.setStatusCode("02");
+            responseDTO.setStatusCode("99");
             responseDTO.setStatusMessage("The secondary product unit doesn't exists");
+            System.out.println("response = " + new Gson().toJson(responseDTO));
             return responseDTO;
         }
 
         // Validate if igv affectation exists
         Optional<Parameter> optionalIgvAffectation = parameterRepository.findById(request.getIgvAffectation());
         if (optionalIgvAffectation.isEmpty()) {
-            responseDTO.setStatusCode("02");
+            responseDTO.setStatusCode("99");
             responseDTO.setStatusMessage("The igv affectation doesn't exists");
+            System.out.println("response = " + new Gson().toJson(responseDTO));
             return responseDTO;
         }
 
@@ -167,68 +176,77 @@ public class ProductServiceImpl implements ProductService {
     /**
      * Update product.
      *
-     * @param request represents UpdateProductRequestDTO
+     * @param request   represents UpdateProductRequestDTO
+     * @param productId represents productId
      * @return product
      */
     @Override
-    public UpdateProductResponseDTO updateProduct(UpdateProductRequestDTO request) throws Exception {
+    public UpdateProductResponseDTO updateProduct(UpdateProductRequestDTO request,
+                                                  Long productId) {
         // Show the request in the console
         System.out.println("request = " + new Gson().toJson(request));
         UpdateProductResponseDTO responseDTO = new UpdateProductResponseDTO();
 
         // Validate if product exists
-        Optional<Product> optionalProduct = productRepository.findById(request.getProductId());
+        Optional<Product> optionalProduct = productRepository.findById(productId);
         if (optionalProduct.isEmpty()) {
-            responseDTO.setStatusCode("02");
+            responseDTO.setStatusCode("99");
             responseDTO.setStatusMessage("The product doesn't exists");
+            System.out.println("response = " + new Gson().toJson(responseDTO));
             return responseDTO;
         }
 
         // Validate if brand exists
         Optional<Brand> optionalBrand = brandRepository.findById(request.getBrandId());
         if (optionalBrand.isEmpty()) {
-            responseDTO.setStatusCode("02");
+            responseDTO.setStatusCode("99");
             responseDTO.setStatusMessage("The brand doesn't exists");
+            System.out.println("response = " + new Gson().toJson(responseDTO));
             return responseDTO;
         }
 
         // Validate if product type exists
         Optional<Parameter> optionalProductType = parameterRepository.findById(request.getProductType());
         if (optionalProductType.isEmpty()) {
-            responseDTO.setStatusCode("02");
+            responseDTO.setStatusCode("99");
             responseDTO.setStatusMessage("The product type doesn't exists");
+            System.out.println("response = " + new Gson().toJson(responseDTO));
             return responseDTO;
         }
 
         // Validate if unit type exists
         Optional<Parameter> optionalUnitType = parameterRepository.findById(request.getUnitType());
         if (optionalUnitType.isEmpty()) {
-            responseDTO.setStatusCode("02");
+            responseDTO.setStatusCode("99");
             responseDTO.setStatusMessage("The unit type doesn't exists");
+            System.out.println("response = " + new Gson().toJson(responseDTO));
             return responseDTO;
         }
 
         // Validate if main product unit exists
-        Optional<Parameter> optionalMainProductUnit = parameterRepository.findById(request.getMainProductUnitId());
+        Optional<ProductUnit> optionalMainProductUnit = productUnitRepository.findById(request.getMainProductUnitId());
         if (optionalMainProductUnit.isEmpty()) {
-            responseDTO.setStatusCode("02");
+            responseDTO.setStatusCode("99");
             responseDTO.setStatusMessage("The main product unit doesn't exists");
+            System.out.println("response = " + new Gson().toJson(responseDTO));
             return responseDTO;
         }
 
         // Validate if secondary product unit exists
-        Optional<Parameter> optionalSecondaryProductUnit = parameterRepository.findById(request.getSecondaryProductUnitId());
+        Optional<ProductUnit> optionalSecondaryProductUnit = productUnitRepository.findById(request.getSecondaryProductUnitId());
         if (optionalSecondaryProductUnit.isEmpty()) {
-            responseDTO.setStatusCode("02");
+            responseDTO.setStatusCode("99");
             responseDTO.setStatusMessage("The secondary product unit doesn't exists");
+            System.out.println("response = " + new Gson().toJson(responseDTO));
             return responseDTO;
         }
 
         // Validate if igv affectation exists
         Optional<Parameter> optionalIgvAffectation = parameterRepository.findById(request.getIgvAffectation());
         if (optionalIgvAffectation.isEmpty()) {
-            responseDTO.setStatusCode("02");
+            responseDTO.setStatusCode("99");
             responseDTO.setStatusMessage("The igv affectation doesn't exists");
+            System.out.println("response = " + new Gson().toJson(responseDTO));
             return responseDTO;
         }
 

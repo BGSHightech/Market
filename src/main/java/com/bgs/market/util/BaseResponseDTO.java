@@ -1,13 +1,17 @@
 package com.bgs.market.util;
 
-import com.bgs.market.exception.ErrorResourceDTO;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
+/**
+ * Class for BaseResponseDTO.
+ */
 @Getter
 @Setter
 public class BaseResponseDTO {
     private String statusCode;
     private String statusMessage;
-    private ErrorResourceDTO objErrorResourse;
+    private List<Errors> errors;
 }

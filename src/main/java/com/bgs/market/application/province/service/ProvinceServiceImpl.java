@@ -4,7 +4,6 @@ import com.bgs.market.application.province.persistence.Province;
 import com.bgs.market.application.province.persistence.ProvinceRepository;
 import com.bgs.market.application.province.view.dto.response.GetAllProvincesResponseDTO;
 import com.bgs.market.application.province.view.dto.response.GetProvinceByIdResponseDTO;
-import com.bgs.market.exception.Exception;
 import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,7 +27,7 @@ public class ProvinceServiceImpl implements ProvinceService {
      * @return provinces
      */
     @Override
-    public GetAllProvincesResponseDTO getAllProvinces() throws Exception {
+    public GetAllProvincesResponseDTO getAllProvinces() {
         // Assign value and find all provinces.
         GetAllProvincesResponseDTO responseDTO = new GetAllProvincesResponseDTO();
         responseDTO.setStatusCode("01");
@@ -47,7 +46,7 @@ public class ProvinceServiceImpl implements ProvinceService {
      * @return provinces
      */
     @Override
-    public GetProvinceByIdResponseDTO getProvinceById(String provinceId) throws Exception {
+    public GetProvinceByIdResponseDTO getProvinceById(String provinceId) {
         // Show the request in the console.
         System.out.println("request = " + new Gson().toJson(provinceId));
         GetProvinceByIdResponseDTO responseDTO = new GetProvinceByIdResponseDTO();

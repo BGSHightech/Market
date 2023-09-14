@@ -6,7 +6,6 @@ import com.bgs.market.application.product.view.dto.response.CreateProductRespons
 import com.bgs.market.application.product.view.dto.response.GetAllProductsResponseDTO;
 import com.bgs.market.application.product.view.dto.response.GetProductByIdResponseDTO;
 import com.bgs.market.application.product.view.dto.response.UpdateProductResponseDTO;
-import com.bgs.market.exception.Exception;
 
 /**
  * Class for ProductService.
@@ -38,8 +37,10 @@ public interface ProductService {
     /**
      * Update product.
      *
-     * @param request represents UpdateProductRequestDTO
+     * @param request   represents UpdateProductRequestDTO
+     * @param productId represents productId
      * @return product
      */
-    UpdateProductResponseDTO updateProduct(UpdateProductRequestDTO request) throws Exception;
+    UpdateProductResponseDTO updateProduct(UpdateProductRequestDTO request,
+                                           Long productId) throws Exception;
 }

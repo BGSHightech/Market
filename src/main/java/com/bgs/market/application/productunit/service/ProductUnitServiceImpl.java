@@ -8,7 +8,6 @@ import com.bgs.market.application.productunit.view.dto.response.CreateProductUni
 import com.bgs.market.application.productunit.view.dto.response.GetAllProductUnitsResponseDTO;
 import com.bgs.market.application.productunit.view.dto.response.GetProductUnitByIdResponseDTO;
 import com.bgs.market.application.productunit.view.dto.response.UpdateProductUnitResponseDTO;
-import com.bgs.market.exception.Exception;
 import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -32,7 +31,7 @@ public class ProductUnitServiceImpl implements ProductUnitService {
      * @return product units
      */
     @Override
-    public GetAllProductUnitsResponseDTO getAllProductUnits() throws Exception {
+    public GetAllProductUnitsResponseDTO getAllProductUnits() {
         // Assign value and find all product units.
         GetAllProductUnitsResponseDTO responseDTO = new GetAllProductUnitsResponseDTO();
         responseDTO.setStatusCode("01");
@@ -51,7 +50,7 @@ public class ProductUnitServiceImpl implements ProductUnitService {
      * @return product unit
      */
     @Override
-    public GetProductUnitByIdResponseDTO getProductUnitById(Long productUnitId) throws Exception {
+    public GetProductUnitByIdResponseDTO getProductUnitById(Long productUnitId) {
         // Show the request in the console.
         System.out.println("request = " + new Gson().toJson(productUnitId));
         GetProductUnitByIdResponseDTO responseDTO = new GetProductUnitByIdResponseDTO();
@@ -59,8 +58,9 @@ public class ProductUnitServiceImpl implements ProductUnitService {
         // Validate if product unit exists
         Optional<ProductUnit> optionalProductUnit = productUnitRepository.findById(productUnitId);
         if (optionalProductUnit.isEmpty()) {
-            responseDTO.setStatusCode("02");
+            responseDTO.setStatusCode("99");
             responseDTO.setStatusMessage("The product unit doesn't exists");
+            System.out.println("response = " + new Gson().toJson(responseDTO));
             return responseDTO;
         }
 
@@ -81,7 +81,7 @@ public class ProductUnitServiceImpl implements ProductUnitService {
      * @return product unit
      */
     @Override
-    public CreateProductUnitResponseDTO createProductUnit(CreateProductUnitRequestDTO request) throws Exception {
+    public CreateProductUnitResponseDTO createProductUnit(CreateProductUnitRequestDTO request) {
         // Show the request in the console.
         System.out.println("request = " + new Gson().toJson(request));
         CreateProductUnitResponseDTO responseDTO = new CreateProductUnitResponseDTO();
@@ -104,20 +104,23 @@ public class ProductUnitServiceImpl implements ProductUnitService {
     /**
      * Update product unit.
      *
-     * @param request represents UpdateProductUnitRequestDTO
+     * @param request       represents UpdateProductUnitRequestDTO
+     * @param productUnitId represents productUnitId
      * @return product unit
      */
     @Override
-    public UpdateProductUnitResponseDTO updateProductUnit(UpdateProductUnitRequestDTO request) throws Exception {
+    public UpdateProductUnitResponseDTO updateProductUnit(UpdateProductUnitRequestDTO request,
+                                                          Long productUnitId) {
         // Show the request in the console
         System.out.println("request = " + new Gson().toJson(request));
         UpdateProductUnitResponseDTO responseDTO = new UpdateProductUnitResponseDTO();
 
         // Validate if product unit exists
-        Optional<ProductUnit> optionalProductUnit = productUnitRepository.findById(request.getProductUnitId());
+        Optional<ProductUnit> optionalProductUnit = productUnitRepository.findById(productUnitId);
         if (optionalProductUnit.isEmpty()) {
-            responseDTO.setStatusCode("02");
+            responseDTO.setStatusCode("99");
             responseDTO.setStatusMessage("The product unit doesn't exists");
+            System.out.println("response = " + new Gson().toJson(responseDTO));
             return responseDTO;
         }
 

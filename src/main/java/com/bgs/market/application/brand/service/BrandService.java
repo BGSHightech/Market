@@ -6,7 +6,6 @@ import com.bgs.market.application.brand.view.dto.response.CreateBrandResponseDTO
 import com.bgs.market.application.brand.view.dto.response.GetAllBrandsResponseDTO;
 import com.bgs.market.application.brand.view.dto.response.GetBrandByIdResponseDTO;
 import com.bgs.market.application.brand.view.dto.response.UpdateBrandResponseDTO;
-import com.bgs.market.exception.Exception;
 
 /**
  * Class for BrandService.
@@ -39,7 +38,9 @@ public interface BrandService {
      * Update brand.
      *
      * @param request represents UpdateBrandRequestDTO
+     * @param brandId represents brandId
      * @return brand
      */
-    UpdateBrandResponseDTO updateBrand(UpdateBrandRequestDTO request) throws Exception;
+    UpdateBrandResponseDTO updateBrand(UpdateBrandRequestDTO request,
+                                       Long brandId) throws Exception;
 }

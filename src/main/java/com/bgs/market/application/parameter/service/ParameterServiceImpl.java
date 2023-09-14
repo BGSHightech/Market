@@ -1,7 +1,5 @@
 package com.bgs.market.application.parameter.service;
 
-import com.bgs.market.application.family.persistence.Family;
-import com.bgs.market.application.family.view.dto.response.GetFamilyByIdResponseDTO;
 import com.bgs.market.application.parameter.persistence.Parameter;
 import com.bgs.market.application.parameter.persistence.ParameterRepository;
 import com.bgs.market.application.parameter.view.dto.request.CreateParameterRequestDTO;
@@ -10,7 +8,6 @@ import com.bgs.market.application.parameter.view.dto.response.CreateParameterRes
 import com.bgs.market.application.parameter.view.dto.response.GetAllParametersResponseDTO;
 import com.bgs.market.application.parameter.view.dto.response.GetParametersByIdResponseDTO;
 import com.bgs.market.application.parameter.view.dto.response.UpdateParameterResponseDTO;
-import com.bgs.market.exception.Exception;
 import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -34,7 +31,7 @@ public class ParameterServiceImpl implements ParameterService {
      * @return parameters
      */
     @Override
-    public GetAllParametersResponseDTO getAllParameters() throws Exception {
+    public GetAllParametersResponseDTO getAllParameters() {
         // Assign value and find all parameters.
         GetAllParametersResponseDTO responseDTO = new GetAllParametersResponseDTO();
         responseDTO.setStatusCode("01");
@@ -53,7 +50,7 @@ public class ParameterServiceImpl implements ParameterService {
      * @return parameters
      */
     @Override
-    public GetAllParametersResponseDTO getAllParametersByParameterType(String type) throws Exception {
+    public GetAllParametersResponseDTO getAllParametersByParameterType(String type) {
         // Show the request in the console, assign value and find all families by parameter type.
         System.out.println("request = " + new Gson().toJson(type));
         GetAllParametersResponseDTO responseDTO = new GetAllParametersResponseDTO();
@@ -73,19 +70,20 @@ public class ParameterServiceImpl implements ParameterService {
      * @return parameter
      */
     @Override
-    public GetParametersByIdResponseDTO getParameterById(Long parameterId) throws Exception {
+    public GetParametersByIdResponseDTO getParameterById(Long parameterId) {
         // Show the request in the console.
         System.out.println("request = " + new Gson().toJson(parameterId));
         GetParametersByIdResponseDTO responseDTO = new GetParametersByIdResponseDTO();
 
         // Validate if parameter exists.
         Optional<Parameter> optionalParameter = parameterRepository.findById(parameterId);
-        if (optionalParameter.isEmpty()){
-            responseDTO.setStatusCode("02");
+        if (optionalParameter.isEmpty()) {
+            responseDTO.setStatusCode("99");
             responseDTO.setStatusMessage("The parameter doesn't exists");
+            System.out.println("response = " + new Gson().toJson(responseDTO));
             return responseDTO;
         }
-        
+
         // Assign values.
         responseDTO.setStatusCode("01");
         responseDTO.setStatusMessage("OK");
@@ -103,7 +101,7 @@ public class ParameterServiceImpl implements ParameterService {
      * @return parameter
      */
     @Override
-    public CreateParameterResponseDTO createParameter(CreateParameterRequestDTO request) throws Exception {
+    public CreateParameterResponseDTO createParameter(CreateParameterRequestDTO request) {
         // Show the request in the console.
         System.out.println("request = " + new Gson().toJson(request));
         CreateParameterResponseDTO responseDTO = new CreateParameterResponseDTO();
@@ -136,20 +134,23 @@ public class ParameterServiceImpl implements ParameterService {
     /**
      * Update parameter.
      *
-     * @param request represents UpdateParameterRequestDTO
+     * @param request     represents UpdateParameterRequestDTO
+     * @param parameterId represents parameterId
      * @return parameter
      */
     @Override
-    public UpdateParameterResponseDTO updateParameter(UpdateParameterRequestDTO request) {
+    public UpdateParameterResponseDTO updateParameter(UpdateParameterRequestDTO request,
+                                                      Long parameterId) {
         // Show the request in the console
         System.out.println("request = " + new Gson().toJson(request));
         UpdateParameterResponseDTO responseDTO = new UpdateParameterResponseDTO();
 
         // Validate if parameter exists
-        Optional<Parameter> optionalParameter = parameterRepository.findById(request.getParameterId());
+        Optional<Parameter> optionalParameter = parameterRepository.findById(parameterId);
         if (optionalParameter.isEmpty()) {
-            responseDTO.setStatusCode("02");
+            responseDTO.setStatusCode("99");
             responseDTO.setStatusMessage("The parameter doesn't exists");
+            System.out.println("response = " + new Gson().toJson(responseDTO));
             return responseDTO;
         }
 

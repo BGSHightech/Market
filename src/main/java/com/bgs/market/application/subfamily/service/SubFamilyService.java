@@ -6,7 +6,6 @@ import com.bgs.market.application.subfamily.view.dto.response.CreateSubFamilyRes
 import com.bgs.market.application.subfamily.view.dto.response.GetAllSubFamiliesResponseDTO;
 import com.bgs.market.application.subfamily.view.dto.response.GetSubFamilyByIdResponseDTO;
 import com.bgs.market.application.subfamily.view.dto.response.UpdateSubFamilyResponseDTO;
-import com.bgs.market.exception.Exception;
 
 /**
  * Class for SubFamilyService.
@@ -38,9 +37,11 @@ public interface SubFamilyService {
     /**
      * Update subfamily.
      *
-     * @param request represents UpdateSubFamilyRequestDTO
-     * @return subfamilies
+     * @param request     represents UpdateSubFamilyRequestDTO
+     * @param subFamilyId represents subFamilyId
+     * @return subfamily
      */
-    UpdateSubFamilyResponseDTO updateSubFamily(UpdateSubFamilyRequestDTO request) throws Exception;
+    UpdateSubFamilyResponseDTO updateSubFamily(UpdateSubFamilyRequestDTO request,
+                                               Long subFamilyId) throws Exception;
 
 }

@@ -1,6 +1,5 @@
 package com.bgs.market.application.parameter.persistence;
 
-import com.bgs.market.exception.Exception;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -19,5 +18,5 @@ public interface ParameterRepository extends JpaRepository<Parameter, Long> {
     @Query("SELECT p FROM Parameter p WHERE " +
             "p.parameterType = :type " +
             "AND p.state = 1")
-    List<Parameter> getAllParametersByTypeQuery(String type) throws Exception;
+    List<Parameter> getAllParametersByTypeQuery(String type);
 }

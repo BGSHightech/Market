@@ -7,8 +7,11 @@ import lombok.Setter;
 
 import java.util.List;
 
+/**
+ * Class for GetAllCategoriesResponseDTO.
+ */
 @Getter
 @Setter
-public class GetAllCategorysResponseDTO extends BaseResponseDTO {
+public class GetAllCategoriesResponseDTO extends BaseResponseDTO {
     private List<Category> categories;
 }

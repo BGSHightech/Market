@@ -1,5 +1,6 @@
 package com.bgs.market.application.parameter.view.dto.request;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,8 +10,12 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CreateParameterRequestDTO {
+    @NotBlank(message = "parameterType should not be null")
     private String parameterType;
+
+    @NotBlank(message = "value should not be null")
     private String value;
+
     private String valueString1;
     private String valueString2;
     private String valueString3;

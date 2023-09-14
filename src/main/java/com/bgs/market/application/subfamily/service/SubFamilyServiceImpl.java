@@ -10,7 +10,6 @@ import com.bgs.market.application.subfamily.view.dto.response.CreateSubFamilyRes
 import com.bgs.market.application.subfamily.view.dto.response.GetAllSubFamiliesResponseDTO;
 import com.bgs.market.application.subfamily.view.dto.response.GetSubFamilyByIdResponseDTO;
 import com.bgs.market.application.subfamily.view.dto.response.UpdateSubFamilyResponseDTO;
-import com.bgs.market.exception.Exception;
 import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -35,7 +34,7 @@ public class SubFamilyServiceImpl implements SubFamilyService {
      * @return subfamilies
      */
     @Override
-    public GetAllSubFamiliesResponseDTO getAllSubFamilies() throws Exception {
+    public GetAllSubFamiliesResponseDTO getAllSubFamilies() {
         // Assign value and find all subfamilies.
         GetAllSubFamiliesResponseDTO responseDTO = new GetAllSubFamiliesResponseDTO();
         responseDTO.setStatusCode("01");
@@ -54,7 +53,7 @@ public class SubFamilyServiceImpl implements SubFamilyService {
      * @return subfamily
      */
     @Override
-    public GetSubFamilyByIdResponseDTO getSubFamilyById(Long subFamilyId) throws Exception {
+    public GetSubFamilyByIdResponseDTO getSubFamilyById(Long subFamilyId) {
         // Show the request in the console.
         System.out.println("request = " + new Gson().toJson(subFamilyId));
         GetSubFamilyByIdResponseDTO responseDTO = new GetSubFamilyByIdResponseDTO();
@@ -62,8 +61,9 @@ public class SubFamilyServiceImpl implements SubFamilyService {
         // Validate if subfamily exists.
         Optional<SubFamily> optionalSubFamily = subFamilyRepository.findById(subFamilyId);
         if (optionalSubFamily.isEmpty()) {
-            responseDTO.setStatusCode("02");
+            responseDTO.setStatusCode("99");
             responseDTO.setStatusMessage("The subfamily doesn't exists");
+            System.out.println("response = " + new Gson().toJson(responseDTO));
             return responseDTO;
         }
 
@@ -84,7 +84,7 @@ public class SubFamilyServiceImpl implements SubFamilyService {
      * @return subfamilies
      */
     @Override
-    public CreateSubFamilyResponseDTO createSubFamily(CreateSubFamilyRequestDTO request) throws Exception {
+    public CreateSubFamilyResponseDTO createSubFamily(CreateSubFamilyRequestDTO request) {
         // Show the request in the console.
         System.out.println("request = " + new Gson().toJson(request));
         CreateSubFamilyResponseDTO responseDTO = new CreateSubFamilyResponseDTO();
@@ -92,8 +92,9 @@ public class SubFamilyServiceImpl implements SubFamilyService {
         // Validate if family exists
         Optional<Family> optionalFamily = familyRepository.findById(request.getFamilyId());
         if (optionalFamily.isEmpty()) {
-            responseDTO.setStatusCode("02");
+            responseDTO.setStatusCode("99");
             responseDTO.setStatusMessage("The family doesn't exists");
+            System.out.println("response = " + new Gson().toJson(responseDTO));
             return responseDTO;
         }
 
@@ -116,34 +117,37 @@ public class SubFamilyServiceImpl implements SubFamilyService {
     /**
      * Update subfamily.
      *
-     * @param request represents UpdateSubFamilyRequestDTO
-     * @return subfamilies
+     * @param request     represents UpdateSubFamilyRequestDTO
+     * @param subFamilyId represents subFamilyId
+     * @return subfamily
      */
     @Override
-    public UpdateSubFamilyResponseDTO updateSubFamily(UpdateSubFamilyRequestDTO request) throws Exception {
+    public UpdateSubFamilyResponseDTO updateSubFamily(UpdateSubFamilyRequestDTO request,
+                                                      Long subFamilyId) {
         // Show the request in the console
         System.out.println("request = " + new Gson().toJson(request));
         UpdateSubFamilyResponseDTO responseDTO = new UpdateSubFamilyResponseDTO();
 
         // Validate if subFamily exists
-        Optional<SubFamily> optionalSubFamily = subFamilyRepository.findById(request.getSubFamilyId());
+        Optional<SubFamily> optionalSubFamily = subFamilyRepository.findById(subFamilyId);
         if (optionalSubFamily.isEmpty()) {
-            responseDTO.setStatusCode("02");
+            responseDTO.setStatusCode("99");
             responseDTO.setStatusMessage("The subFamily doesn't exists");
+            System.out.println("response = " + new Gson().toJson(responseDTO));
             return responseDTO;
         }
 
         // Validate if family exists
         Optional<Family> optionalFamily = familyRepository.findById(request.getFamilyId());
         if (optionalFamily.isEmpty()) {
-            responseDTO.setStatusCode("02");
+            responseDTO.setStatusCode("99");
             responseDTO.setStatusMessage("The family doesn't exists");
+            System.out.println("response = " + new Gson().toJson(responseDTO));
             return responseDTO;
         }
 
         // Assign values and save.
         SubFamily existingSubFamily = optionalSubFamily.get();
-        existingSubFamily.setSubFamilyId(request.getSubFamilyId());
         existingSubFamily.setSubFamilyName(request.getSubFamilyName());
         existingSubFamily.setState(request.getState());
         existingSubFamily.setFamilyId(request.getFamilyId());
@@ -158,5 +162,4 @@ public class SubFamilyServiceImpl implements SubFamilyService {
         System.out.println("response = " + new Gson().toJson(responseDTO));
         return responseDTO;
     }
-
 }

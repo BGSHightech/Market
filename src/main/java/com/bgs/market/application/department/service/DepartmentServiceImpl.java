@@ -4,7 +4,6 @@ import com.bgs.market.application.department.persistence.Department;
 import com.bgs.market.application.department.persistence.DepartmentRepository;
 import com.bgs.market.application.department.view.dto.response.GetAllDepartmentsResponseDTO;
 import com.bgs.market.application.department.view.dto.response.GetDepartmentByIdResponseDTO;
-import com.bgs.market.exception.Exception;
 import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,7 +27,7 @@ public class DepartmentServiceImpl implements DepartmentService {
      * @return departments
      */
     @Override
-    public GetAllDepartmentsResponseDTO getAllDepartments() throws Exception {
+    public GetAllDepartmentsResponseDTO getAllDepartments() {
         // Assign value and find all departments.
         GetAllDepartmentsResponseDTO responseDTO = new GetAllDepartmentsResponseDTO();
         responseDTO.setStatusCode("01");
@@ -55,8 +54,9 @@ public class DepartmentServiceImpl implements DepartmentService {
         // Verify if department exists
         Optional<Department> optionalDepartment = departmentRepository.findById(departmentId);
         if (optionalDepartment.isEmpty()) {
-            responseDTO.setStatusCode("02");
+            responseDTO.setStatusCode("99");
             responseDTO.setStatusMessage("The department doesn't exists");
+            System.out.println("response = " + new Gson().toJson(responseDTO));
             return responseDTO;
         }
 

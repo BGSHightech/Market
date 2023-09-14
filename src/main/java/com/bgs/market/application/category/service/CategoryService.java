@@ -3,10 +3,9 @@ package com.bgs.market.application.category.service;
 import com.bgs.market.application.category.view.dto.request.CreateCategoryRequestDTO;
 import com.bgs.market.application.category.view.dto.request.UpdateCategoryRequestDTO;
 import com.bgs.market.application.category.view.dto.response.CreateCategoryResponseDTO;
-import com.bgs.market.application.category.view.dto.response.GetAllCategorysResponseDTO;
+import com.bgs.market.application.category.view.dto.response.GetAllCategoriesResponseDTO;
 import com.bgs.market.application.category.view.dto.response.GetCategoryByIdResponseDTO;
 import com.bgs.market.application.category.view.dto.response.UpdateCategoryResponseDTO;
-import com.bgs.market.exception.Exception;
 
 /**
  * Class for CategoryService
@@ -17,7 +16,7 @@ public interface CategoryService {
      *
      * @return categories
      */
-    GetAllCategorysResponseDTO getAllCategories() throws Exception;
+    GetAllCategoriesResponseDTO getAllCategories() throws Exception;
 
     /**
      * Get category by id.
@@ -39,8 +38,10 @@ public interface CategoryService {
     /**
      * Update category.
      *
-     * @param request represents UpdateCategoryRequestDTO
+     * @param request    represents UpdateCategoryRequestDTO
+     * @param categoryId represents categoryId
      * @return category
      */
-    UpdateCategoryResponseDTO updateCategory(UpdateCategoryRequestDTO request) throws Exception;
+    UpdateCategoryResponseDTO updateCategory(UpdateCategoryRequestDTO request,
+                                             Long categoryId) throws Exception;
 }

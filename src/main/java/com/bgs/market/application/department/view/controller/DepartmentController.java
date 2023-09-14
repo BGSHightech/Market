@@ -3,7 +3,6 @@ package com.bgs.market.application.department.view.controller;
 import com.bgs.market.application.department.service.DepartmentService;
 import com.bgs.market.application.department.view.dto.response.GetAllDepartmentsResponseDTO;
 import com.bgs.market.application.department.view.dto.response.GetDepartmentByIdResponseDTO;
-import com.bgs.market.exception.Exception;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

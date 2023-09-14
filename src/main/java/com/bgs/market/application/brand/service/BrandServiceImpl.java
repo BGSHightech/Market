@@ -10,7 +10,6 @@ import com.bgs.market.application.brand.view.dto.request.UpdateBrandRequestDTO;
 import com.bgs.market.application.brand.view.dto.response.CreateBrandResponseDTO;
 import com.bgs.market.application.brand.view.dto.response.GetAllBrandsResponseDTO;
 import com.bgs.market.application.brand.view.dto.response.UpdateBrandResponseDTO;
-import com.bgs.market.exception.Exception;
 import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -35,7 +34,7 @@ public class BrandServiceImpl implements BrandService {
      * @return brands
      */
     @Override
-    public GetAllBrandsResponseDTO getAllBrands() throws Exception {
+    public GetAllBrandsResponseDTO getAllBrands() {
         // Assign value and find all brands.
         GetAllBrandsResponseDTO responseDTO = new GetAllBrandsResponseDTO();
         responseDTO.setStatusCode("01");
@@ -54,7 +53,7 @@ public class BrandServiceImpl implements BrandService {
      * @return brand
      */
     @Override
-    public GetBrandByIdResponseDTO getBrandById(Long brandId) throws Exception {
+    public GetBrandByIdResponseDTO getBrandById(Long brandId) {
         // Show the request in the console.
         System.out.println("request = " + new Gson().toJson(brandId));
         GetBrandByIdResponseDTO responseDTO = new GetBrandByIdResponseDTO();
@@ -62,8 +61,9 @@ public class BrandServiceImpl implements BrandService {
         // Validate if brand exists.
         Optional<Brand> optionalBrand = brandRepository.findById(brandId);
         if (optionalBrand.isEmpty()) {
-            responseDTO.setStatusCode("02");
+            responseDTO.setStatusCode("99");
             responseDTO.setStatusMessage("The brand doesn't exists");
+            System.out.println("response = " + new Gson().toJson(responseDTO));
             return responseDTO;
         }
 
@@ -84,7 +84,7 @@ public class BrandServiceImpl implements BrandService {
      * @return brand.
      */
     @Override
-    public CreateBrandResponseDTO createBrand(CreateBrandRequestDTO request) throws Exception {
+    public CreateBrandResponseDTO createBrand(CreateBrandRequestDTO request) {
         // Show the request in the console.
         System.out.println("request = " + new Gson().toJson(request));
         CreateBrandResponseDTO responseDTO = new CreateBrandResponseDTO();
@@ -92,8 +92,9 @@ public class BrandServiceImpl implements BrandService {
         // Validate if subFamily exists.
         Optional<SubFamily> optionalSubFamily = subFamilyRepository.findById(request.getSubFamilyId());
         if (optionalSubFamily.isEmpty()) {
-            responseDTO.setStatusCode("02");
+            responseDTO.setStatusCode("99");
             responseDTO.setStatusMessage("The subFamily doesn't exists");
+            System.out.println("response = " + new Gson().toJson(responseDTO));
             return responseDTO;
         }
 
@@ -117,33 +118,36 @@ public class BrandServiceImpl implements BrandService {
      * Update brand.
      *
      * @param request represents UpdateBrandRequestDTO
-     * @return brand.
+     * @param brandId represents brandId
+     * @return brand
      */
     @Override
-    public UpdateBrandResponseDTO updateBrand(UpdateBrandRequestDTO request) throws Exception {
+    public UpdateBrandResponseDTO updateBrand(UpdateBrandRequestDTO request,
+                                              Long brandId) {
         // Show the request in the console
         System.out.println("request = " + new Gson().toJson(request));
         UpdateBrandResponseDTO responseDTO = new UpdateBrandResponseDTO();
 
         // Validate if brand exists.
-        Optional<Brand> optionalBrand = brandRepository.findById(request.getBrandId());
+        Optional<Brand> optionalBrand = brandRepository.findById(brandId);
         if (optionalBrand.isEmpty()) {
-            responseDTO.setStatusCode("02");
+            responseDTO.setStatusCode("99");
             responseDTO.setStatusMessage("The brand doesn't exists");
+            System.out.println("response = " + new Gson().toJson(responseDTO));
             return responseDTO;
         }
 
         // Validate if subFamily exists.
         Optional<SubFamily> optionalSubFamily = subFamilyRepository.findById(request.getSubFamilyId());
         if (optionalSubFamily.isEmpty()) {
-            responseDTO.setStatusCode("02");
+            responseDTO.setStatusCode("99");
             responseDTO.setStatusMessage("The subFamily doesn't exists");
+            System.out.println("response = " + new Gson().toJson(responseDTO));
             return responseDTO;
         }
 
         // Assign values and save.
         Brand existingBrand = optionalBrand.get();
-        existingBrand.setBrandId(request.getBrandId());
         existingBrand.setBrandName(request.getBrandName());
         existingBrand.setState(request.getState());
         existingBrand.setSubFamilyId(request.getSubFamilyId());

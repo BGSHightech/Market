@@ -1,8 +1,6 @@
 package com.bgs.market.application.family.service;
 
 import com.bgs.market.application.category.persistence.Category;
-import com.bgs.market.application.clienttype.persistence.ClientType;
-import com.bgs.market.application.clienttype.view.dto.response.GetClientTypeByIdResponseDTO;
 import com.bgs.market.application.family.persistence.Family;
 import com.bgs.market.application.category.persistence.CategoryRepository;
 import com.bgs.market.application.family.persistence.FamilyRepository;
@@ -12,7 +10,6 @@ import com.bgs.market.application.family.view.dto.response.CreateFamilyResponseD
 import com.bgs.market.application.family.view.dto.response.GetAllFamiliesResponseDTO;
 import com.bgs.market.application.family.view.dto.response.GetFamilyByIdResponseDTO;
 import com.bgs.market.application.family.view.dto.response.UpdateFamilyResponseDTO;
-import com.bgs.market.exception.Exception;
 import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -37,7 +34,7 @@ public class FamilyServiceImpl implements FamilyService {
      * @return families
      */
     @Override
-    public GetAllFamiliesResponseDTO getAllFamilies() throws Exception {
+    public GetAllFamiliesResponseDTO getAllFamilies() {
         // Assign value and find all families.
         GetAllFamiliesResponseDTO responseDTO = new GetAllFamiliesResponseDTO();
         responseDTO.setStatusCode("01");
@@ -56,16 +53,17 @@ public class FamilyServiceImpl implements FamilyService {
      * @return family
      */
     @Override
-    public GetFamilyByIdResponseDTO getFamilyById(Long familyId) throws Exception {
+    public GetFamilyByIdResponseDTO getFamilyById(Long familyId) {
         // Show the request in the console.
         System.out.println("request = " + new Gson().toJson(familyId));
         GetFamilyByIdResponseDTO responseDTO = new GetFamilyByIdResponseDTO();
 
         // Validate if family exists.
         Optional<Family> optionalFamily = familyRepository.findById(familyId);
-        if (optionalFamily.isEmpty()){
-            responseDTO.setStatusCode("02");
+        if (optionalFamily.isEmpty()) {
+            responseDTO.setStatusCode("99");
             responseDTO.setStatusMessage("The family doesn't exists");
+            System.out.println("response = " + new Gson().toJson(responseDTO));
             return responseDTO;
         }
 
@@ -86,7 +84,7 @@ public class FamilyServiceImpl implements FamilyService {
      * @return family
      */
     @Override
-    public CreateFamilyResponseDTO createFamily(CreateFamilyRequestDTO request) throws Exception {
+    public CreateFamilyResponseDTO createFamily(CreateFamilyRequestDTO request) {
         // Show the request in the console.
         System.out.println("request = " + new Gson().toJson(request));
         CreateFamilyResponseDTO responseDTO = new CreateFamilyResponseDTO();
@@ -94,8 +92,9 @@ public class FamilyServiceImpl implements FamilyService {
         // Validate if category exists
         Optional<Category> optionalCategory = categoryRepository.findById(request.getCategoryId());
         if (optionalCategory.isEmpty()) {
-            responseDTO.setStatusCode("02");
+            responseDTO.setStatusCode("99");
             responseDTO.setStatusMessage("The category doesn't exists");
+            System.out.println("response = " + new Gson().toJson(responseDTO));
             return responseDTO;
         }
 
@@ -118,28 +117,32 @@ public class FamilyServiceImpl implements FamilyService {
     /**
      * Update family.
      *
-     * @param request represents UpdateFamilyRequestDTO.
+     * @param request  represents UpdateFamilyRequestDTO
+     * @param familyId represents familyId
      * @return family
      */
     @Override
-    public UpdateFamilyResponseDTO updateFamily(UpdateFamilyRequestDTO request) throws Exception {
+    public UpdateFamilyResponseDTO updateFamily(UpdateFamilyRequestDTO request,
+                                                Long familyId) {
         // Show the request in the console
         System.out.println("request = " + new Gson().toJson(request));
         UpdateFamilyResponseDTO responseDTO = new UpdateFamilyResponseDTO();
 
         // Validate if family exists
-        Optional<Family> optionalFamily = familyRepository.findById(request.getFamilyId());
+        Optional<Family> optionalFamily = familyRepository.findById(familyId);
         if (optionalFamily.isEmpty()) {
-            responseDTO.setStatusCode("02");
+            responseDTO.setStatusCode("99");
             responseDTO.setStatusMessage("The family doesn't exists");
+            System.out.println("response = " + new Gson().toJson(responseDTO));
             return responseDTO;
         }
 
         // Validate if category exists
         Optional<Category> optionalCategory = categoryRepository.findById(request.getCategoryId());
         if (optionalCategory.isEmpty()) {
-            responseDTO.setStatusCode("02");
+            responseDTO.setStatusCode("99");
             responseDTO.setStatusMessage("The category doesn't exists");
+            System.out.println("response = " + new Gson().toJson(responseDTO));
             return responseDTO;
         }
 

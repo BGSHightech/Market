@@ -7,7 +7,7 @@ import com.bgs.market.application.product.view.dto.response.CreateProductRespons
 import com.bgs.market.application.product.view.dto.response.GetAllProductsResponseDTO;
 import com.bgs.market.application.product.view.dto.response.GetProductByIdResponseDTO;
 import com.bgs.market.application.product.view.dto.response.UpdateProductResponseDTO;
-import com.bgs.market.exception.Exception;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -54,7 +54,7 @@ public class ProductController {
      * @return product
      */
     @PostMapping()
-    public CreateProductResponseDTO createProduct(@RequestBody CreateProductRequestDTO request) throws Exception {
+    public CreateProductResponseDTO createProduct(@Valid @RequestBody CreateProductRequestDTO request) throws Exception {
         return productService.createProduct(request);
     }
 
@@ -67,8 +67,7 @@ public class ProductController {
      */
     @PutMapping("{productId}")
     public UpdateProductResponseDTO updateProduct(@PathVariable("productId") Long productId,
-                                                  @RequestBody UpdateProductRequestDTO request) throws Exception {
-        request.setProductId(productId);
-        return productService.updateProduct(request);
+                                                  @Valid @RequestBody UpdateProductRequestDTO request) throws Exception {
+        return productService.updateProduct(request, productId);
     }
 }

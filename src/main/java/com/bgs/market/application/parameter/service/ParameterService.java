@@ -1,13 +1,11 @@
 package com.bgs.market.application.parameter.service;
 
-import com.bgs.market.application.family.view.dto.response.GetFamilyByIdResponseDTO;
 import com.bgs.market.application.parameter.view.dto.request.CreateParameterRequestDTO;
 import com.bgs.market.application.parameter.view.dto.request.UpdateParameterRequestDTO;
 import com.bgs.market.application.parameter.view.dto.response.CreateParameterResponseDTO;
 import com.bgs.market.application.parameter.view.dto.response.GetAllParametersResponseDTO;
 import com.bgs.market.application.parameter.view.dto.response.GetParametersByIdResponseDTO;
 import com.bgs.market.application.parameter.view.dto.response.UpdateParameterResponseDTO;
-import com.bgs.market.exception.Exception;
 
 /**
  * Class for ParameterService.
@@ -48,8 +46,10 @@ public interface ParameterService {
     /**
      * Update parameter.
      *
-     * @param request represents UpdateParameterRequestDTO
+     * @param request     represents UpdateParameterRequestDTO
+     * @param parameterId represents parameterId
      * @return parameter
      */
-    UpdateParameterResponseDTO updateParameter(UpdateParameterRequestDTO request) throws Exception;
+    UpdateParameterResponseDTO updateParameter(UpdateParameterRequestDTO request,
+                                               Long parameterId) throws Exception;
 }

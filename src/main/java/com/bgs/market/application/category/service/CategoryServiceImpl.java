@@ -7,15 +7,17 @@ import com.bgs.market.application.subfamily.persistence.SubFamilyRepository;
 import com.bgs.market.application.category.view.dto.request.CreateCategoryRequestDTO;
 import com.bgs.market.application.category.view.dto.request.UpdateCategoryRequestDTO;
 import com.bgs.market.application.category.view.dto.response.CreateCategoryResponseDTO;
-import com.bgs.market.application.category.view.dto.response.GetAllCategorysResponseDTO;
+import com.bgs.market.application.category.view.dto.response.GetAllCategoriesResponseDTO;
 import com.bgs.market.application.category.view.dto.response.UpdateCategoryResponseDTO;
-import com.bgs.market.exception.Exception;
 import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+/**
+ * Class for CategoryServiceImpl.
+ */
 @Service
 @AllArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
@@ -31,9 +33,9 @@ public class CategoryServiceImpl implements CategoryService {
      * @return categories
      */
     @Override
-    public GetAllCategorysResponseDTO getAllCategories() throws Exception {
+    public GetAllCategoriesResponseDTO getAllCategories() {
         // Assign value and find all categories.
-        GetAllCategorysResponseDTO responseDTO = new GetAllCategorysResponseDTO();
+        GetAllCategoriesResponseDTO responseDTO = new GetAllCategoriesResponseDTO();
         responseDTO.setStatusCode("01");
         responseDTO.setStatusMessage("OK");
         responseDTO.setCategories(categoryRepository.findAll());
@@ -51,7 +53,7 @@ public class CategoryServiceImpl implements CategoryService {
      * @return category
      */
     @Override
-    public GetCategoryByIdResponseDTO getCategoryById(Long categoryId) throws Exception {
+    public GetCategoryByIdResponseDTO getCategoryById(Long categoryId) {
         // Show the request in the console.
         System.out.println("request = " + new Gson().toJson(categoryId));
         GetCategoryByIdResponseDTO responseDTO = new GetCategoryByIdResponseDTO();
@@ -59,8 +61,9 @@ public class CategoryServiceImpl implements CategoryService {
         // Validate if category exists.
         Optional<Category> optionalCategory = categoryRepository.findById(categoryId);
         if (optionalCategory.isEmpty()) {
-            responseDTO.setStatusCode("02");
+            responseDTO.setStatusCode("99");
             responseDTO.setStatusMessage("The category doesn't exists");
+            System.out.println("response = " + new Gson().toJson(responseDTO));
             return responseDTO;
         }
 
@@ -81,7 +84,7 @@ public class CategoryServiceImpl implements CategoryService {
      * @return category
      */
     @Override
-    public CreateCategoryResponseDTO createCategory(CreateCategoryRequestDTO request) throws Exception {
+    public CreateCategoryResponseDTO createCategory(CreateCategoryRequestDTO request) {
         // Show the request in the console
         System.out.println("request = " + new Gson().toJson(request));
         CreateCategoryResponseDTO responseDTO = new CreateCategoryResponseDTO();
@@ -104,26 +107,28 @@ public class CategoryServiceImpl implements CategoryService {
     /**
      * Update category.
      *
-     * @param request represents UpdateCategoryRequestDTO
+     * @param request    represents UpdateCategoryRequestDTO
+     * @param categoryId represents categoryId
      * @return category
      */
     @Override
-    public UpdateCategoryResponseDTO updateCategory(UpdateCategoryRequestDTO request) throws Exception {
+    public UpdateCategoryResponseDTO updateCategory(UpdateCategoryRequestDTO request,
+                                                    Long categoryId) {
         // Show the request in the console
         System.out.println("request = " + new Gson().toJson(request));
         UpdateCategoryResponseDTO responseDTO = new UpdateCategoryResponseDTO();
 
         // Validate if category exists.
-        Optional<Category> optionalCategory = categoryRepository.findById(request.getCategoryId());
+        Optional<Category> optionalCategory = categoryRepository.findById(categoryId);
         if (optionalCategory.isEmpty()) {
-            responseDTO.setStatusCode("02");
+            responseDTO.setStatusCode("99");
             responseDTO.setStatusMessage("The category doesn't exists");
+            System.out.println("response = " + new Gson().toJson(responseDTO));
             return responseDTO;
         }
 
         // Assign values and save.
         Category existingCategory = optionalCategory.get();
-        existingCategory.setCategoryId(request.getCategoryId());
         existingCategory.setCategoryName(request.getCategoryName());
         existingCategory.setState(request.getState());
         Category category = categoryRepository.save(existingCategory);

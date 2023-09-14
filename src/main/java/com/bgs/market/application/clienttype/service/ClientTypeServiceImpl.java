@@ -1,7 +1,5 @@
 package com.bgs.market.application.clienttype.service;
 
-import com.bgs.market.application.client.persistence.Client;
-import com.bgs.market.application.client.view.dto.response.GetClientByIdResponseDTO;
 import com.bgs.market.application.clienttype.persistence.ClientType;
 import com.bgs.market.application.clienttype.persistence.ClientTypeRepository;
 import com.bgs.market.application.clienttype.view.dto.request.CreateClientTypeRequestDTO;
@@ -10,7 +8,6 @@ import com.bgs.market.application.clienttype.view.dto.response.CreateClientTypeR
 import com.bgs.market.application.clienttype.view.dto.response.GetAllClientTypesResponseDTO;
 import com.bgs.market.application.clienttype.view.dto.response.GetClientTypeByIdResponseDTO;
 import com.bgs.market.application.clienttype.view.dto.response.UpdateClientTypeResponseDTO;
-import com.bgs.market.exception.Exception;
 import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -34,7 +31,7 @@ public class ClientTypeServiceImpl implements ClientTypeService {
      * @return client types
      */
     @Override
-    public GetAllClientTypesResponseDTO getAllClientTypes() throws Exception {
+    public GetAllClientTypesResponseDTO getAllClientTypes() {
         // Assign value and find all client types.
         GetAllClientTypesResponseDTO responseDTO = new GetAllClientTypesResponseDTO();
         responseDTO.setStatusCode("01");
@@ -53,16 +50,17 @@ public class ClientTypeServiceImpl implements ClientTypeService {
      * @return client type
      */
     @Override
-    public GetClientTypeByIdResponseDTO getClientTypeById(Long clientTypeId) throws Exception {
+    public GetClientTypeByIdResponseDTO getClientTypeById(Long clientTypeId) {
         // Show the request in the console.
         System.out.println("request = " + new Gson().toJson(clientTypeId));
         GetClientTypeByIdResponseDTO responseDTO = new GetClientTypeByIdResponseDTO();
 
         // Validate if client type exists.
         Optional<ClientType> optionalClientType = clientTypeRepository.findById(clientTypeId);
-        if (optionalClientType.isEmpty()){
-            responseDTO.setStatusCode("02");
+        if (optionalClientType.isEmpty()) {
+            responseDTO.setStatusCode("99");
             responseDTO.setStatusMessage("The client type doesn't exists");
+            System.out.println("response = " + new Gson().toJson(responseDTO));
             return responseDTO;
         }
 
@@ -83,7 +81,7 @@ public class ClientTypeServiceImpl implements ClientTypeService {
      * @return client type
      */
     @Override
-    public CreateClientTypeResponseDTO createClientType(CreateClientTypeRequestDTO request) throws Exception {
+    public CreateClientTypeResponseDTO createClientType(CreateClientTypeRequestDTO request) {
         // Assign value and find all clients.
         System.out.println("request = " + new Gson().toJson(request));
         CreateClientTypeResponseDTO responseDTO = new CreateClientTypeResponseDTO();
@@ -106,26 +104,28 @@ public class ClientTypeServiceImpl implements ClientTypeService {
     /**
      * Update client type.
      *
-     * @param request represents UpdateClientTypeRequestDTO
+     * @param request      represents UpdateClientTypeRequestDTO
+     * @param clientTypeId represents clientTypeId
      * @return client type
      */
     @Override
-    public UpdateClientTypeResponseDTO updateClientType(UpdateClientTypeRequestDTO request) throws Exception {
+    public UpdateClientTypeResponseDTO updateClientType(UpdateClientTypeRequestDTO request,
+                                                        Long clientTypeId) {
         // Show the request in the console.
         System.out.println("request = " + new Gson().toJson(request));
         UpdateClientTypeResponseDTO responseDTO = new UpdateClientTypeResponseDTO();
 
         // Verify if client type exists
-        Optional<ClientType> optionalClientType = clientTypeRepository.findById(request.getClientTypeId());
+        Optional<ClientType> optionalClientType = clientTypeRepository.findById(clientTypeId);
         if (optionalClientType.isEmpty()) {
-            responseDTO.setStatusCode("02");
+            responseDTO.setStatusCode("99");
             responseDTO.setStatusMessage("The client type doesn't exists");
+            System.out.println("response = " + new Gson().toJson(responseDTO));
             return responseDTO;
         }
 
         // Assign values and save.
         ClientType existingClientType = optionalClientType.get();
-        existingClientType.setClientTypeId(request.getClientTypeId());
         existingClientType.setClientTypeName(request.getClientTypeName());
         existingClientType.setState(request.getState());
         ClientType clientType = clientTypeRepository.save(existingClientType);
