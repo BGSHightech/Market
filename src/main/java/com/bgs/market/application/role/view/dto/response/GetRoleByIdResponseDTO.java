@@ -6,10 +6,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Class for CreateRoleResponseDTO.
+ * Class for GetRoleByIdResponseDTO.
  */
 @Getter
 @Setter
-public class CreateRoleResponseDTO extends BaseResponseDTO {
+public class GetRoleByIdResponseDTO extends BaseResponseDTO {
     private Role role;
 }
