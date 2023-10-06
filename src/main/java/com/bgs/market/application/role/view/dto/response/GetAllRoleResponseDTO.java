@@ -5,11 +5,13 @@ import com.bgs.market.util.BaseResponseDTO;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 /**
- * Class for CreateRoleResponseDTO.
+ * Class for GetAllRoleResponseDTO.
  */
 @Getter
 @Setter
-public class CreateRoleResponseDTO extends BaseResponseDTO {
-    private Role role;
+public class GetAllRoleResponseDTO extends BaseResponseDTO {
+    private List<Role> roles;
 }
