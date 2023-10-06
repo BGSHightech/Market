@@ -11,6 +11,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Date;
+
 /**
  * Class for User.
  */
@@ -25,28 +27,28 @@ public class User {
     @Id
     @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long user_id;
+    private Long userId;
 
-    @Column()
-    private String first_name;
+    @Column(nullable = false)
+    private String firstName;
 
-    @Column()
-    private String last_name;
+    @Column(nullable = false)
+    private String lastName;
 
     @Column(nullable = false)
     private String email;
 
-    @Column(nullable = false)
-    private String phone;
-
-    @Column(nullable = false)
-    private String date_of_birth;
-
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String username;
 
-    @Column()
+    @Column(nullable = false)
     private String password;
+
+    @Column()
+    private Date dateOfBirth;
+
+    @Column()
+    private String phone;
 
     @Column()
     private Integer state = 1;

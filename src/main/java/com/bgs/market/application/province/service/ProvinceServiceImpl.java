@@ -17,7 +17,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class ProvinceServiceImpl implements ProvinceService {
     /**
-     * Class for ProductUnitServiceImpl.
+     * Instantiating repositories.
      */
     ProvinceRepository provinceRepository;
 

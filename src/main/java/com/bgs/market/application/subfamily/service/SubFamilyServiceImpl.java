@@ -23,7 +23,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class SubFamilyServiceImpl implements SubFamilyService {
     /**
-     * Class for ProductUnitServiceImpl.
+     * Instantiating repositories.
      */
     SubFamilyRepository subFamilyRepository;
     FamilyRepository familyRepository;
