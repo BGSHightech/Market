@@ -3,10 +3,7 @@ package com.bgs.market.application.user.view.controller;
 import com.bgs.market.application.user.service.UserService;
 import com.bgs.market.application.user.view.dto.request.CreateUserRequestDTO;
 import com.bgs.market.application.user.view.dto.request.UpdateUserRequestDTO;
-import com.bgs.market.application.user.view.dto.response.CreateUserResponseDTO;
-import com.bgs.market.application.user.view.dto.response.GetAllUsersResponseDTO;
-import com.bgs.market.application.user.view.dto.response.GetUserByIdResponseDTO;
-import com.bgs.market.application.user.view.dto.response.UpdateUserResponseDTO;
+import com.bgs.market.application.user.view.dto.response.*;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -66,8 +63,13 @@ public class UserController {
      * @return user
      */
     @PutMapping("{userId}")
-    public UpdateUserResponseDTO updateUserResponseDTO(@PathVariable("userId") Long userId,
+    public UpdateUserResponseDTO updateUser(@PathVariable("userId") Long userId,
                                                        @Valid @RequestBody UpdateUserRequestDTO request) throws Exception {
         return userService.updateUser(request, userId);
+    }
+
+    @GetMapping("{userId}/role")
+    public GetAllRolesByUserId getAllRolesByUserId(@PathVariable("userId") Long userId) throws Exception {
+        return userService.getAllRolesByUserId(userId);
     }
 }

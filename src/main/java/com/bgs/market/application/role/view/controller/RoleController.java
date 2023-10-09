@@ -26,7 +26,7 @@ public class RoleController {
      * @return role
      */
     @GetMapping
-    public GetAllRoleResponseDTO getAllRoles() throws Exception{
+    public GetAllRoleResponseDTO getAllRoles() throws Exception {
         return roleService.getAllRoles();
     }
 
@@ -48,20 +48,20 @@ public class RoleController {
      * @return role
      */
     @PostMapping
-    public CreateRoleResponseDTO createRole(@Valid @RequestBody CreateRoleRequestDTO request) throws Exception{
+    public CreateRoleResponseDTO createRole(@Valid @RequestBody CreateRoleRequestDTO request) throws Exception {
         return roleService.createRole(request);
     }
 
     /**
-     * Update product unit.
+     * Update role.
      *
      * @param role_id represents role_id
-     * @param request       represents UpdateRoleRequestDTO
+     * @param request represents UpdateRoleRequestDTO
      * @return role
      */
     @PutMapping("{role_id}")
     public UpdateRoleResponseDTO updateRoleResponseDTO(@PathVariable("role_id") Long role_id,
-                                                       @Valid @RequestBody UpdateRoleRequestDTO request) throws Exception{
+                                                       @Valid @RequestBody UpdateRoleRequestDTO request) throws Exception {
         return roleService.updateRole(request, role_id);
     }
 }

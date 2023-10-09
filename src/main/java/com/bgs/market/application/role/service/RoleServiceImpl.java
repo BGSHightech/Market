@@ -19,7 +19,7 @@ import java.util.Optional;
  */
 @Service
 @AllArgsConstructor
-public class RoleServiceImpl implements RoleService{
+public class RoleServiceImpl implements RoleService {
     /**
      * Instantiating repositories.
      */
@@ -32,7 +32,7 @@ public class RoleServiceImpl implements RoleService{
      */
     @Override
     public GetAllRoleResponseDTO getAllRoles() {
-        // Assign value and find all product units.
+        // Assign value and find all roles.
         GetAllRoleResponseDTO responseDTO = new GetAllRoleResponseDTO();
         responseDTO.setStatusCode("01");
         responseDTO.setStatusMessage("OK");
@@ -56,9 +56,9 @@ public class RoleServiceImpl implements RoleService{
         System.out.println("request = " + new Gson().toJson(role_id));
         GetRoleByIdResponseDTO responseDTO = new GetRoleByIdResponseDTO();
 
-        // Validate if product unit exists
+        // Validate if role exists
         Optional<Role> optionalRole = roleRepository.findById(role_id);
-        if (optionalRole.isEmpty()){
+        if (optionalRole.isEmpty()) {
             responseDTO.setStatusCode("99");
             responseDTO.setStatusMessage("The role doesn't exists");
             System.out.println("response = " + new Gson().toJson(responseDTO));
@@ -106,7 +106,7 @@ public class RoleServiceImpl implements RoleService{
     /**
      * Update role.
      *
-     * @param request       represents UpdateRoleRequestDTO
+     * @param request represents UpdateRoleRequestDTO
      * @param role_id represents role_id
      * @return role
      */
@@ -118,9 +118,9 @@ public class RoleServiceImpl implements RoleService{
         System.out.println("request = " + new Gson().toJson(request));
         UpdateRoleResponseDTO responseDTO = new UpdateRoleResponseDTO();
 
-        //Validate if product unit exists
+        //Validate if role exists
         Optional<Role> optionalRole = roleRepository.findById(role_id);
-        if (optionalRole.isEmpty()){
+        if (optionalRole.isEmpty()) {
             responseDTO.setStatusCode("99");
             responseDTO.setStatusMessage("The role doesn't exists");
             System.out.println("response = " + new Gson().toJson(responseDTO));

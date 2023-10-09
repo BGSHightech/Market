@@ -1,13 +1,11 @@
 package com.bgs.market.application.user.service;
 
+import com.bgs.market.application.role.persistence.RoleRepository;
 import com.bgs.market.application.user.persistence.User;
 import com.bgs.market.application.user.persistence.UserRepository;
 import com.bgs.market.application.user.view.dto.request.CreateUserRequestDTO;
 import com.bgs.market.application.user.view.dto.request.UpdateUserRequestDTO;
-import com.bgs.market.application.user.view.dto.response.CreateUserResponseDTO;
-import com.bgs.market.application.user.view.dto.response.GetAllUsersResponseDTO;
-import com.bgs.market.application.user.view.dto.response.GetUserByIdResponseDTO;
-import com.bgs.market.application.user.view.dto.response.UpdateUserResponseDTO;
+import com.bgs.market.application.user.view.dto.response.*;
 import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,6 +22,7 @@ public class UserServiceImpl implements UserService {
      * Instantiating repositories.
      */
     UserRepository userRepository;
+    RoleRepository roleRepository;
 
     /**
      * Get list of users.
@@ -151,4 +150,38 @@ public class UserServiceImpl implements UserService {
         System.out.println("response = " + new Gson().toJson(responseDTO));
         return responseDTO;
     }
+
+    @Override
+    public GetAllRolesByUserId getAllRolesByUserId(Long userId) throws Exception {
+        // Show the request in the console.
+        System.out.println("request = " + new Gson().toJson(userId));
+        GetAllRolesByUserId responseDTO = new GetAllRolesByUserId();
+
+        // Validate if user exists.
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if (optionalUser.isEmpty()) {
+            responseDTO.setStatusCode("99");
+            responseDTO.setStatusMessage("The user doesn't exists");
+            System.out.println("response = " + new Gson().toJson(responseDTO));
+            return responseDTO;
+        }
+
+        // Assign values.
+        responseDTO.setStatusCode("01");
+        responseDTO.setStatusMessage("OK");
+        responseDTO.setRoles(optionalUser.get().getRoles());
+
+        // Show the result in the console and return the value.
+        System.out.println("response = " + new Gson().toJson(responseDTO));
+        return responseDTO;
+    }
+
+    @Override
+    public AddRoleToUser addRoleToUser(Long userId, Long roleId) throws Exception {
+        // Show the request in the console.
+        System.out.println("request = " + new Gson().toJson("userId: " + userId + " - roleId: " + roleId));
+        AddRoleToUser responseDTO = new AddRoleToUser();
+        return null;
+    }
+
 }

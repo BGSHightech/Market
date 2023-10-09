@@ -37,7 +37,7 @@ public interface RoleService {
     /**
      * Update role.
      *
-     * @param request       represents UpdateRoleResponseDTO
+     * @param request represents UpdateRoleResponseDTO
      * @param role_id represents role_id
      * @return role
      */
