@@ -46,18 +46,18 @@ public class RoleServiceImpl implements RoleService {
     /**
      * Get role by id.
      *
-     * @param role_id represents role_id
+     * @param roleId represents roleId
      * @return role
      */
 
     @Override
-    public GetRoleByIdResponseDTO getRoleById(Long role_id) {
+    public GetRoleByIdResponseDTO getRoleById(Long roleId) {
         // Show the request in the console.
-        System.out.println("request = " + new Gson().toJson(role_id));
+        System.out.println("request = " + new Gson().toJson(roleId));
         GetRoleByIdResponseDTO responseDTO = new GetRoleByIdResponseDTO();
 
         // Validate if role exists
-        Optional<Role> optionalRole = roleRepository.findById(role_id);
+        Optional<Role> optionalRole = roleRepository.findById(roleId);
         if (optionalRole.isEmpty()) {
             responseDTO.setStatusCode("99");
             responseDTO.setStatusMessage("The role doesn't exists");
@@ -90,7 +90,7 @@ public class RoleServiceImpl implements RoleService {
 
         //Assign values and save.
         Role role = new Role();
-        role.setRole_name(request.getRole_name());
+        role.setRoleName(request.getRoleName());
         Role roleCreated = roleRepository.save(role);
 
         //Assign response.
@@ -107,19 +107,19 @@ public class RoleServiceImpl implements RoleService {
      * Update role.
      *
      * @param request represents UpdateRoleRequestDTO
-     * @param role_id represents role_id
+     * @param roleId represents roleId
      * @return role
      */
 
     @Override
-    public UpdateRoleResponseDTO updateRole(UpdateRoleRequestDTO request, Long role_id) {
+    public UpdateRoleResponseDTO updateRole(UpdateRoleRequestDTO request, Long roleId) {
 
         //Show the request in the console
         System.out.println("request = " + new Gson().toJson(request));
         UpdateRoleResponseDTO responseDTO = new UpdateRoleResponseDTO();
 
         //Validate if role exists
-        Optional<Role> optionalRole = roleRepository.findById(role_id);
+        Optional<Role> optionalRole = roleRepository.findById(roleId);
         if (optionalRole.isEmpty()) {
             responseDTO.setStatusCode("99");
             responseDTO.setStatusMessage("The role doesn't exists");
@@ -129,7 +129,7 @@ public class RoleServiceImpl implements RoleService {
 
         // Assign values and save.
         Role existingRole = optionalRole.get();
-        existingRole.setRole_name(request.getRole_name());
+        existingRole.setRoleName(request.getRoleName());
         existingRole.setState(request.getState());
         Role role = roleRepository.save(existingRole);
 

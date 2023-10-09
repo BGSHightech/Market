@@ -33,12 +33,12 @@ public class RoleController {
     /**
      * Get role by id.
      *
-     * @param role_id represents role_id
+     * @param roleId represents roleId
      * @return role
      */
-    @GetMapping("{role_id}")
-    public GetRoleByIdResponseDTO getRoleById(@PathVariable("role_id") Long role_id) throws Exception {
-        return roleService.getRoleById(role_id);
+    @GetMapping("{roleId}")
+    public GetRoleByIdResponseDTO getRoleById(@PathVariable("roleId") Long roleId) throws Exception {
+        return roleService.getRoleById(roleId);
     }
 
     /**
@@ -55,13 +55,13 @@ public class RoleController {
     /**
      * Update role.
      *
-     * @param role_id represents role_id
+     * @param roleId represents roleId
      * @param request represents UpdateRoleRequestDTO
      * @return role
      */
-    @PutMapping("{role_id}")
-    public UpdateRoleResponseDTO updateRoleResponseDTO(@PathVariable("role_id") Long role_id,
+    @PutMapping("{roleId}")
+    public UpdateRoleResponseDTO updateRoleResponseDTO(@PathVariable("roleId") Long roleId,
                                                        @Valid @RequestBody UpdateRoleRequestDTO request) throws Exception {
-        return roleService.updateRole(request, role_id);
+        return roleService.updateRole(request, roleId);
     }
 }

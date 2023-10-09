@@ -21,10 +21,10 @@ public interface RoleService {
     /**
      * Get role by id.
      *
-     * @param role_id represents role_id
+     * @param roleId represents roleId
      * @return role
      */
-    GetRoleByIdResponseDTO getRoleById(Long role_id) throws Exception;
+    GetRoleByIdResponseDTO getRoleById(Long roleId) throws Exception;
 
     /**
      * Create role.
@@ -38,10 +38,10 @@ public interface RoleService {
      * Update role.
      *
      * @param request represents UpdateRoleResponseDTO
-     * @param role_id represents role_id
+     * @param roleId represents roleId
      * @return role
      */
     UpdateRoleResponseDTO updateRole(UpdateRoleRequestDTO request,
-                                     Long role_id) throws Exception;
+                                     Long roleId) throws Exception;
 
 }

@@ -10,6 +10,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CreateRoleRequestDTO {
-    @NotBlank(message = "RolesName should not be null")
-    private String role_name;
+    @NotBlank(message = "roleName should not be null")
+    private String roleName;
 }
