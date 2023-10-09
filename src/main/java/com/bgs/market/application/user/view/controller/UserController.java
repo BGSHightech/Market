@@ -6,13 +6,7 @@ import com.bgs.market.application.user.view.dto.request.UpdateUserRequestDTO;
 import com.bgs.market.application.user.view.dto.response.*;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Class for UserController.
@@ -68,8 +62,38 @@ public class UserController {
         return userService.updateUser(request, userId);
     }
 
+    /**
+     * Get all roles by user id.
+     *
+     * @param userId represents userId
+     * @return roles
+     */
     @GetMapping("{userId}/role")
     public GetAllRolesByUserId getAllRolesByUserId(@PathVariable("userId") Long userId) throws Exception {
         return userService.getAllRolesByUserId(userId);
+    }
+
+    /**
+     * Add role to user.
+     *
+     * @param userId represents userId
+     * @param roleId represents roleId
+     * @return roles
+     */
+    @PostMapping("{userId}/role/{roleId}")
+    public AddRoleToUser addRoleToUser(@PathVariable("userId") Long userId, @PathVariable("roleId") Long roleId) throws Exception {
+        return userService.addRoleToUser(userId, roleId);
+    }
+
+    /**
+     * Delete role to user.
+     *
+     * @param userId represents userId
+     * @param roleId represents roleId
+     * @return roles
+     */
+    @DeleteMapping("{userId}/role/{roleId}")
+    public DeleteRoleToUser deleteRoleToUser(@PathVariable("userId") Long userId, @PathVariable("roleId") Long roleId) throws Exception {
+        return userService.deleteRoleToUser(userId, roleId);
     }
 }

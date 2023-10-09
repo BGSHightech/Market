@@ -1,5 +1,6 @@
 package com.bgs.market.application.user.service;
 
+import com.bgs.market.application.role.persistence.Role;
 import com.bgs.market.application.role.persistence.RoleRepository;
 import com.bgs.market.application.user.persistence.User;
 import com.bgs.market.application.user.persistence.UserRepository;
@@ -10,7 +11,9 @@ import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 /**
  * Class for UserServiceImpl.
@@ -151,6 +154,12 @@ public class UserServiceImpl implements UserService {
         return responseDTO;
     }
 
+    /**
+     * Get all roles by user id.
+     *
+     * @param userId represents userId
+     * @return roles
+     */
     @Override
     public GetAllRolesByUserId getAllRolesByUserId(Long userId) throws Exception {
         // Show the request in the console.
@@ -176,12 +185,110 @@ public class UserServiceImpl implements UserService {
         return responseDTO;
     }
 
+    /**
+     * Add role to user.
+     *
+     * @param userId represents userId
+     * @param roleId represents roleId
+     * @return roles
+     */
     @Override
     public AddRoleToUser addRoleToUser(Long userId, Long roleId) throws Exception {
         // Show the request in the console.
         System.out.println("request = " + new Gson().toJson("userId: " + userId + " - roleId: " + roleId));
         AddRoleToUser responseDTO = new AddRoleToUser();
-        return null;
+
+        // Validate if user exists.
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if (optionalUser.isEmpty()) {
+            responseDTO.setStatusCode("99");
+            responseDTO.setStatusMessage("The user doesn't exists");
+            System.out.println("response = " + new Gson().toJson(responseDTO));
+            return responseDTO;
+        }
+
+        // Validate if rol exists.
+        Optional<Role> optionalRole = roleRepository.findById(roleId);
+        if (optionalRole.isEmpty()) {
+            responseDTO.setStatusCode("99");
+            responseDTO.setStatusMessage("The role doesn't exists");
+            System.out.println("response = " + new Gson().toJson(responseDTO));
+            return responseDTO;
+        }
+
+        // If the user does not yet have the role, assign it
+        User existingUser = optionalUser.get();
+        Stream<Role> roleStream = existingUser.getRoles().stream().filter(r -> r.getRoleId().equals(optionalRole.get().getRoleId()));
+        if (roleStream.findAny().isEmpty()) {
+            List<Role> roles = existingUser.getRoles();
+            roles.add(optionalRole.get());
+            existingUser.setRoles(roles);
+        }
+
+        // Save user.
+        User user = userRepository.save(existingUser);
+
+        // Assign response.
+        responseDTO.setStatusCode("01");
+        responseDTO.setStatusMessage("OK");
+        responseDTO.setRoles(user.getRoles());
+
+        // Show the result in the console and return the value.
+        System.out.println("response = " + new Gson().toJson(responseDTO));
+        return responseDTO;
+    }
+
+    /**
+     * Delete role to user.
+     *
+     * @param userId represents userId
+     * @param roleId represents roleId
+     * @return roles
+     */
+    @Override
+    public DeleteRoleToUser deleteRoleToUser(Long userId, Long roleId) throws Exception {
+        // Show the request in the console.
+        System.out.println("request = " + new Gson().toJson("userId: " + userId + " - roleId: " + roleId));
+        DeleteRoleToUser responseDTO = new DeleteRoleToUser();
+
+        // Validate if user exists.
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if (optionalUser.isEmpty()) {
+            responseDTO.setStatusCode("99");
+            responseDTO.setStatusMessage("The user doesn't exists");
+            System.out.println("response = " + new Gson().toJson(responseDTO));
+            return responseDTO;
+        }
+
+        // Validate if rol exists.
+        Optional<Role> optionalRole = roleRepository.findById(roleId);
+        if (optionalRole.isEmpty()) {
+            responseDTO.setStatusCode("99");
+            responseDTO.setStatusMessage("The role doesn't exists");
+            System.out.println("response = " + new Gson().toJson(responseDTO));
+            return responseDTO;
+        }
+
+        // If the user have the role, remove it
+        User existingUser = optionalUser.get();
+        Stream<Role> roleStream = existingUser.getRoles().stream().filter(r -> r.getRoleId().equals(optionalRole.get().getRoleId()));
+        if (roleStream.findAny().isPresent()) {
+            List<Role> roles = existingUser.getRoles();
+            roles.remove(optionalRole.get());
+            existingUser.setRoles(roles);
+        }
+
+        // Save user.
+        User user = userRepository.save(existingUser);
+
+        // Assign response.
+        responseDTO.setStatusCode("01");
+        responseDTO.setStatusMessage("OK");
+        responseDTO.setRoles(user.getRoles());
+
+        // Show the result in the console and return the value.
+        System.out.println("response = " + new Gson().toJson(responseDTO));
+        return responseDTO;
     }
 
 }

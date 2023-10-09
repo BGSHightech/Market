@@ -58,4 +58,12 @@ public interface UserService {
      */
     AddRoleToUser addRoleToUser(Long userId, Long roleId) throws Exception;
 
+    /**
+     * Delete role to user.
+     *
+     * @param userId represents userId
+     * @param roleId represents roleId
+     * @return roles
+     */
+    DeleteRoleToUser deleteRoleToUser(Long userId, Long roleId) throws Exception;
 }
