@@ -12,7 +12,7 @@ import com.bgs.market.application.category.view.dto.response.UpdateCategoryRespo
  */
 public interface CategoryService {
     /**
-     * Get categories.
+     * Get list of categories.
      *
      * @return categories
      */

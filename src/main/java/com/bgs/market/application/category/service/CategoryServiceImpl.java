@@ -3,7 +3,6 @@ package com.bgs.market.application.category.service;
 import com.bgs.market.application.category.persistence.Category;
 import com.bgs.market.application.category.persistence.CategoryRepository;
 import com.bgs.market.application.category.view.dto.response.GetCategoryByIdResponseDTO;
-import com.bgs.market.application.subfamily.persistence.SubFamilyRepository;
 import com.bgs.market.application.category.view.dto.request.CreateCategoryRequestDTO;
 import com.bgs.market.application.category.view.dto.request.UpdateCategoryRequestDTO;
 import com.bgs.market.application.category.view.dto.response.CreateCategoryResponseDTO;
@@ -25,7 +24,6 @@ public class CategoryServiceImpl implements CategoryService {
      * Instantiating repositories.
      */
     CategoryRepository categoryRepository;
-    SubFamilyRepository subFamilyRepository;
 
     /**
      * Get categories.
@@ -33,7 +31,7 @@ public class CategoryServiceImpl implements CategoryService {
      * @return categories
      */
     @Override
-    public GetAllCategoriesResponseDTO getAllCategories() {
+    public GetAllCategoriesResponseDTO getAllCategories() throws Exception {
         // Assign value and find all categories.
         GetAllCategoriesResponseDTO responseDTO = new GetAllCategoriesResponseDTO();
         responseDTO.setStatusCode("01");
@@ -53,7 +51,7 @@ public class CategoryServiceImpl implements CategoryService {
      * @return category
      */
     @Override
-    public GetCategoryByIdResponseDTO getCategoryById(Long categoryId) {
+    public GetCategoryByIdResponseDTO getCategoryById(Long categoryId) throws Exception {
         // Show the request in the console.
         System.out.println("request = " + new Gson().toJson(categoryId));
         GetCategoryByIdResponseDTO responseDTO = new GetCategoryByIdResponseDTO();
@@ -84,7 +82,7 @@ public class CategoryServiceImpl implements CategoryService {
      * @return category
      */
     @Override
-    public CreateCategoryResponseDTO createCategory(CreateCategoryRequestDTO request) {
+    public CreateCategoryResponseDTO createCategory(CreateCategoryRequestDTO request) throws Exception {
         // Show the request in the console
         System.out.println("request = " + new Gson().toJson(request));
         CreateCategoryResponseDTO responseDTO = new CreateCategoryResponseDTO();
@@ -113,7 +111,7 @@ public class CategoryServiceImpl implements CategoryService {
      */
     @Override
     public UpdateCategoryResponseDTO updateCategory(UpdateCategoryRequestDTO request,
-                                                    Long categoryId) {
+                                                    Long categoryId) throws Exception {
         // Show the request in the console
         System.out.println("request = " + new Gson().toJson(request));
         UpdateCategoryResponseDTO responseDTO = new UpdateCategoryResponseDTO();

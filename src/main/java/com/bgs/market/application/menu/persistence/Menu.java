@@ -1,4 +1,4 @@
-package com.bgs.market.application.category.persistence;
+package com.bgs.market.application.menu.persistence;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,22 +12,22 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * Class for Category.
+ * Class for Menu.
  */
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "category")
-public class Category {
+@Table(name = "menu")
+public class Menu {
     @Id
     @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long categoryId;
+    private Long menuId;
 
     @Column(nullable = false)
-    private String categoryName;
+    private String menuName;
 
     @Column(nullable = false)
     private Integer state = 1;
