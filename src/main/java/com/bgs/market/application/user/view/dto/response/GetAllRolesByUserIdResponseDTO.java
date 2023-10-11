@@ -8,10 +8,10 @@ import lombok.Setter;
 import java.util.List;
 
 /**
- * Class for DeleteRoleToUser.
+ * Class for GetAllRolesByUserId.
  */
 @Getter
 @Setter
-public class DeleteRoleToUser extends BaseResponseDTO {
+public class GetAllRolesByUserIdResponseDTO extends BaseResponseDTO {
     private List<Role> roles;
 }

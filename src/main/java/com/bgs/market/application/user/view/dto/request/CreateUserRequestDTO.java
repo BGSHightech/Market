@@ -13,10 +13,10 @@ import java.sql.Date;
 @Getter
 @Setter
 public class CreateUserRequestDTO {
-    @NotBlank(message = "first_name should not be null")
+    @NotBlank(message = "firstName should not be null")
     private String firstName;
 
-    @NotBlank(message = "last_name should not be null")
+    @NotBlank(message = "lastName should not be null")
     private String lastName;
 
     @Email(message = "invalid email address")

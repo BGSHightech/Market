@@ -12,6 +12,6 @@ import java.util.List;
  */
 @Getter
 @Setter
-public class AddRoleToUser extends BaseResponseDTO {
+public class AddRoleToUserResponseDTO extends BaseResponseDTO {
     private List<Role> roles;
 }

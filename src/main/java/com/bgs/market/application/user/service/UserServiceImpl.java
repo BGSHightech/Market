@@ -5,10 +5,12 @@ import com.bgs.market.application.role.persistence.RoleRepository;
 import com.bgs.market.application.user.persistence.User;
 import com.bgs.market.application.user.persistence.UserRepository;
 import com.bgs.market.application.user.view.dto.request.CreateUserRequestDTO;
+import com.bgs.market.application.user.view.dto.request.LoginUserRequestDTO;
 import com.bgs.market.application.user.view.dto.request.UpdateUserRequestDTO;
 import com.bgs.market.application.user.view.dto.response.*;
 import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -88,15 +90,30 @@ public class UserServiceImpl implements UserService {
         System.out.println("request = " + new Gson().toJson(request));
         CreateUserResponseDTO responseDTO = new CreateUserResponseDTO();
 
-        // Assign values and save.
+        // Validate if user exists
+        Optional<User> optionalUser = userRepository.getUserByUsername(request.getUsername());
+        if (optionalUser.isPresent()) {
+            responseDTO.setStatusCode("99");
+            responseDTO.setStatusMessage("The username is already being used");
+            System.out.println("response = " + new Gson().toJson(responseDTO));
+            return responseDTO;
+        }
+
+        // Encrypt password
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        String encryptedPassword = bCryptPasswordEncoder.encode(request.getPassword());
+
+        // Assign values.
         User user = new User();
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
         user.setEmail(request.getEmail());
         user.setUsername(request.getUsername());
-        user.setPassword(request.getPassword());
         user.setDateOfBirth(request.getDateOfBirth());
         user.setPhone(request.getPhone());
+        user.setPassword(encryptedPassword);
+
+        // Save user
         User subFamilyCreated = userRepository.save(user);
 
         // Assign response.
@@ -127,21 +144,26 @@ public class UserServiceImpl implements UserService {
         Optional<User> optionalUser = userRepository.findById(userId);
         if (optionalUser.isEmpty()) {
             responseDTO.setStatusCode("99");
-            responseDTO.setStatusMessage("The user doesn't exists");
+            responseDTO.setStatusMessage("The user doesn't exists.");
             System.out.println("response = " + new Gson().toJson(responseDTO));
             return responseDTO;
         }
 
-        // Assign values and save.
+        // Encrypt password
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        String encryptedPassword = bCryptPasswordEncoder.encode(request.getPassword());
+
+        // Username cannot be modified, assign values.
         User existingUser = optionalUser.get();
         existingUser.setFirstName(request.getFirstName());
         existingUser.setLastName(request.getLastName());
         existingUser.setEmail(request.getEmail());
-        existingUser.setUsername(request.getUsername());
-        existingUser.setPassword(request.getPassword());
         existingUser.setDateOfBirth(request.getDateOfBirth());
         existingUser.setPhone(request.getPhone());
         existingUser.setState(request.getState());
+        existingUser.setPassword(encryptedPassword);
+
+        // Save user.
         User user = userRepository.save(existingUser);
 
         // Assign response.
@@ -161,16 +183,16 @@ public class UserServiceImpl implements UserService {
      * @return roles
      */
     @Override
-    public GetAllRolesByUserId getAllRolesByUserId(Long userId) throws Exception {
+    public GetAllRolesByUserIdResponseDTO getAllRolesByUserId(Long userId) throws Exception {
         // Show the request in the console.
         System.out.println("request = " + new Gson().toJson(userId));
-        GetAllRolesByUserId responseDTO = new GetAllRolesByUserId();
+        GetAllRolesByUserIdResponseDTO responseDTO = new GetAllRolesByUserIdResponseDTO();
 
         // Validate if user exists.
         Optional<User> optionalUser = userRepository.findById(userId);
         if (optionalUser.isEmpty()) {
             responseDTO.setStatusCode("99");
-            responseDTO.setStatusMessage("The user doesn't exists");
+            responseDTO.setStatusMessage("The user doesn't exists.");
             System.out.println("response = " + new Gson().toJson(responseDTO));
             return responseDTO;
         }
@@ -193,16 +215,16 @@ public class UserServiceImpl implements UserService {
      * @return roles
      */
     @Override
-    public AddRoleToUser addRoleToUser(Long userId, Long roleId) throws Exception {
+    public AddRoleToUserResponseDTO addRoleToUser(Long userId, Long roleId) throws Exception {
         // Show the request in the console.
         System.out.println("request = " + new Gson().toJson("userId: " + userId + " - roleId: " + roleId));
-        AddRoleToUser responseDTO = new AddRoleToUser();
+        AddRoleToUserResponseDTO responseDTO = new AddRoleToUserResponseDTO();
 
         // Validate if user exists.
         Optional<User> optionalUser = userRepository.findById(userId);
         if (optionalUser.isEmpty()) {
             responseDTO.setStatusCode("99");
-            responseDTO.setStatusMessage("The user doesn't exists");
+            responseDTO.setStatusMessage("The user doesn't exists.");
             System.out.println("response = " + new Gson().toJson(responseDTO));
             return responseDTO;
         }
@@ -211,7 +233,7 @@ public class UserServiceImpl implements UserService {
         Optional<Role> optionalRole = roleRepository.findById(roleId);
         if (optionalRole.isEmpty()) {
             responseDTO.setStatusCode("99");
-            responseDTO.setStatusMessage("The role doesn't exists");
+            responseDTO.setStatusMessage("The role doesn't exists.");
             System.out.println("response = " + new Gson().toJson(responseDTO));
             return responseDTO;
         }
@@ -246,16 +268,16 @@ public class UserServiceImpl implements UserService {
      * @return roles
      */
     @Override
-    public DeleteRoleToUser deleteRoleToUser(Long userId, Long roleId) throws Exception {
+    public DeleteRoleToUserResponseDTO deleteRoleToUser(Long userId, Long roleId) throws Exception {
         // Show the request in the console.
         System.out.println("request = " + new Gson().toJson("userId: " + userId + " - roleId: " + roleId));
-        DeleteRoleToUser responseDTO = new DeleteRoleToUser();
+        DeleteRoleToUserResponseDTO responseDTO = new DeleteRoleToUserResponseDTO();
 
         // Validate if user exists.
         Optional<User> optionalUser = userRepository.findById(userId);
         if (optionalUser.isEmpty()) {
             responseDTO.setStatusCode("99");
-            responseDTO.setStatusMessage("The user doesn't exists");
+            responseDTO.setStatusMessage("The user doesn't exists.");
             System.out.println("response = " + new Gson().toJson(responseDTO));
             return responseDTO;
         }
@@ -291,4 +313,53 @@ public class UserServiceImpl implements UserService {
         return responseDTO;
     }
 
+    /**
+     * Login user.
+     *
+     * @param request represents LoginUserRequestDTO
+     * @return user
+     */
+    @Override
+    public LoginUserResponseDTO loginUser(LoginUserRequestDTO request) throws Exception {
+        // Show the request in the console.
+        System.out.println("request = " + new Gson().toJson(request));
+        LoginUserResponseDTO responseDTO = new LoginUserResponseDTO();
+
+        // Validate if the username exists
+        Optional<User> optionalUser = userRepository.getUserByUsername(request.getUsername());
+        if (optionalUser.isEmpty()) {
+            responseDTO.setStatusCode("99");
+            responseDTO.setStatusMessage("There is no user with that username.");
+            System.out.println("response = " + new Gson().toJson(responseDTO));
+            return responseDTO;
+        }
+
+        User user = optionalUser.get();
+
+        // Validate if user is active
+        if (!user.getState().equals(1)) {
+            responseDTO.setStatusCode("99");
+            responseDTO.setStatusMessage("User is inactive.");
+            System.out.println("response = " + new Gson().toJson(responseDTO));
+            return responseDTO;
+        }
+
+        // Validate if the password is correct
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        if (!bCryptPasswordEncoder.matches(request.getPassword(), user.getPassword())) {
+            responseDTO.setStatusCode("99");
+            responseDTO.setStatusMessage("The password is incorrect.");
+            System.out.println("response = " + new Gson().toJson(responseDTO));
+            return responseDTO;
+        }
+
+        // Assign response.
+        responseDTO.setStatusCode("01");
+        responseDTO.setStatusMessage("OK");
+        responseDTO.setUser(user);
+
+        // Show the result in the console and return the value.
+        System.out.println("response = " + new Gson().toJson(responseDTO));
+        return responseDTO;
+    }
 }

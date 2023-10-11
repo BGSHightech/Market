@@ -2,6 +2,7 @@ package com.bgs.market.application.user.view.controller;
 
 import com.bgs.market.application.user.service.UserService;
 import com.bgs.market.application.user.view.dto.request.CreateUserRequestDTO;
+import com.bgs.market.application.user.view.dto.request.LoginUserRequestDTO;
 import com.bgs.market.application.user.view.dto.request.UpdateUserRequestDTO;
 import com.bgs.market.application.user.view.dto.response.*;
 import jakarta.validation.Valid;
@@ -58,7 +59,7 @@ public class UserController {
      */
     @PutMapping("{userId}")
     public UpdateUserResponseDTO updateUser(@PathVariable("userId") Long userId,
-                                                       @Valid @RequestBody UpdateUserRequestDTO request) throws Exception {
+                                            @Valid @RequestBody UpdateUserRequestDTO request) throws Exception {
         return userService.updateUser(request, userId);
     }
 
@@ -69,7 +70,7 @@ public class UserController {
      * @return roles
      */
     @GetMapping("{userId}/role")
-    public GetAllRolesByUserId getAllRolesByUserId(@PathVariable("userId") Long userId) throws Exception {
+    public GetAllRolesByUserIdResponseDTO getAllRolesByUserId(@PathVariable("userId") Long userId) throws Exception {
         return userService.getAllRolesByUserId(userId);
     }
 
@@ -81,7 +82,7 @@ public class UserController {
      * @return roles
      */
     @PostMapping("{userId}/role/{roleId}")
-    public AddRoleToUser addRoleToUser(@PathVariable("userId") Long userId, @PathVariable("roleId") Long roleId) throws Exception {
+    public AddRoleToUserResponseDTO addRoleToUser(@PathVariable("userId") Long userId, @PathVariable("roleId") Long roleId) throws Exception {
         return userService.addRoleToUser(userId, roleId);
     }
 
@@ -93,7 +94,18 @@ public class UserController {
      * @return roles
      */
     @DeleteMapping("{userId}/role/{roleId}")
-    public DeleteRoleToUser deleteRoleToUser(@PathVariable("userId") Long userId, @PathVariable("roleId") Long roleId) throws Exception {
+    public DeleteRoleToUserResponseDTO deleteRoleToUser(@PathVariable("userId") Long userId, @PathVariable("roleId") Long roleId) throws Exception {
         return userService.deleteRoleToUser(userId, roleId);
+    }
+
+    /**
+     * Login user.
+     *
+     * @param request represents LoginUserRequestDTO
+     * @return user
+     */
+    @PostMapping("login")
+    public LoginUserResponseDTO loginUser(@Valid @RequestBody LoginUserRequestDTO request) throws Exception {
+        return userService.loginUser(request);
     }
 }

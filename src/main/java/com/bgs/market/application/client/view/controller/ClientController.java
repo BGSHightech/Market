@@ -52,7 +52,6 @@ public class ClientController {
         return clientService.createClient(request);
     }
 
-
     /**
      * Update client.
      *

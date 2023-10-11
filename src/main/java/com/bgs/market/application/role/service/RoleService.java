@@ -2,10 +2,7 @@ package com.bgs.market.application.role.service;
 
 import com.bgs.market.application.role.view.dto.request.CreateRoleRequestDTO;
 import com.bgs.market.application.role.view.dto.request.UpdateRoleRequestDTO;
-import com.bgs.market.application.role.view.dto.response.CreateRoleResponseDTO;
-import com.bgs.market.application.role.view.dto.response.GetAllRoleResponseDTO;
-import com.bgs.market.application.role.view.dto.response.GetRoleByIdResponseDTO;
-import com.bgs.market.application.role.view.dto.response.UpdateRoleResponseDTO;
+import com.bgs.market.application.role.view.dto.response.*;
 
 /**
  * Class for RoleService.
@@ -38,10 +35,35 @@ public interface RoleService {
      * Update role.
      *
      * @param request represents UpdateRoleResponseDTO
-     * @param roleId represents roleId
+     * @param roleId  represents roleId
      * @return role
      */
     UpdateRoleResponseDTO updateRole(UpdateRoleRequestDTO request,
                                      Long roleId) throws Exception;
 
+    /**
+     * Get all permissions by role id.
+     *
+     * @param roleId represents roleId
+     * @return permissions
+     */
+    GetAllPermissionsByRoleIdResponseDTO getAllPermissionsByRoleId(Long roleId) throws Exception;
+
+    /**
+     * Add permission to role.
+     *
+     * @param roleId       represents roleId
+     * @param permissionId represents permissionId
+     * @return permissions
+     */
+    AddPermissionToRoleResponseDTO addPermissionToRole(Long roleId, Long permissionId) throws Exception;
+
+    /**
+     * Delete permission to role.
+     *
+     * @param roleId       represents roleId
+     * @param permissionId represents permissionId
+     * @return permission
+     */
+    DeletePermissionToRoleResponseDTO deletePermissionToRole(Long roleId, Long permissionId) throws Exception;
 }

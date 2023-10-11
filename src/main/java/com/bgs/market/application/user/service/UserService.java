@@ -1,6 +1,7 @@
 package com.bgs.market.application.user.service;
 
 import com.bgs.market.application.user.view.dto.request.CreateUserRequestDTO;
+import com.bgs.market.application.user.view.dto.request.LoginUserRequestDTO;
 import com.bgs.market.application.user.view.dto.request.UpdateUserRequestDTO;
 import com.bgs.market.application.user.view.dto.response.*;
 
@@ -47,7 +48,7 @@ public interface UserService {
      * @param userId represents userId
      * @return roles
      */
-    GetAllRolesByUserId getAllRolesByUserId(Long userId) throws Exception;
+    GetAllRolesByUserIdResponseDTO getAllRolesByUserId(Long userId) throws Exception;
 
     /**
      * Add role to user.
@@ -56,7 +57,7 @@ public interface UserService {
      * @param roleId represents roleId
      * @return roles
      */
-    AddRoleToUser addRoleToUser(Long userId, Long roleId) throws Exception;
+    AddRoleToUserResponseDTO addRoleToUser(Long userId, Long roleId) throws Exception;
 
     /**
      * Delete role to user.
@@ -65,5 +66,14 @@ public interface UserService {
      * @param roleId represents roleId
      * @return roles
      */
-    DeleteRoleToUser deleteRoleToUser(Long userId, Long roleId) throws Exception;
+    DeleteRoleToUserResponseDTO deleteRoleToUser(Long userId, Long roleId) throws Exception;
+
+    /**
+     * Login user.
+     *
+     * @param request represents LoginUserRequestDTO
+     * @return user
+     */
+    LoginUserResponseDTO loginUser(LoginUserRequestDTO request) throws Exception;
+
 }
