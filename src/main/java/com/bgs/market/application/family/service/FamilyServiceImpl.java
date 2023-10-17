@@ -6,14 +6,13 @@ import com.bgs.market.application.category.persistence.CategoryRepository;
 import com.bgs.market.application.family.persistence.FamilyRepository;
 import com.bgs.market.application.family.view.dto.request.CreateFamilyRequestDTO;
 import com.bgs.market.application.family.view.dto.request.UpdateFamilyRequestDTO;
-import com.bgs.market.application.family.view.dto.response.CreateFamilyResponseDTO;
-import com.bgs.market.application.family.view.dto.response.GetAllFamiliesResponseDTO;
-import com.bgs.market.application.family.view.dto.response.GetFamilyByIdResponseDTO;
-import com.bgs.market.application.family.view.dto.response.UpdateFamilyResponseDTO;
+import com.bgs.market.application.family.view.dto.response.*;
 import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -161,5 +160,36 @@ public class FamilyServiceImpl implements FamilyService {
         // Show the result in the console and return the value.
         System.out.println("response = " + new Gson().toJson(responseDTO));
         return responseDTO;
+    }
+
+    @Override
+    public GetAllFamiliesByCategoryIdResponseDTO getFamiliesByCategoryId(Long categoryId) throws Exception {
+        // Show the request in the console.
+        System.out.println("request = " + new Gson().toJson(categoryId));
+        GetAllFamiliesByCategoryIdResponseDTO responseDTO = new GetAllFamiliesByCategoryIdResponseDTO();
+
+
+        // Validate if category exists
+        Optional<Category> optionalCategory = categoryRepository.findById(categoryId);
+        if (optionalCategory.isEmpty()) {
+            responseDTO.setStatusCode("99");
+            responseDTO.setStatusMessage("The category doesn't exists");
+            System.out.println("response = " + new Gson().toJson(responseDTO));
+            return responseDTO;
+        }
+        List<Family> families = new ArrayList<>();
+        Optional <List<Family>> optionalFamilies = familyRepository.findFamiliesByCategoryId(categoryId);
+        if (optionalFamilies.isPresent()){
+            families = optionalFamilies.get();
+        }
+        // Assign response.
+        responseDTO.setStatusCode("01");
+        responseDTO.setStatusMessage("OK");
+        responseDTO.setFamilies(families);
+
+        // Show the result in the console and return the value.
+        System.out.println("response = " + new Gson().toJson(responseDTO));
+        return responseDTO;
+
     }
 }

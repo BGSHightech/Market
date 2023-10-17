@@ -3,10 +3,7 @@ package com.bgs.market.application.family.view.controller;
 import com.bgs.market.application.family.service.FamilyService;
 import com.bgs.market.application.family.view.dto.request.CreateFamilyRequestDTO;
 import com.bgs.market.application.family.view.dto.request.UpdateFamilyRequestDTO;
-import com.bgs.market.application.family.view.dto.response.CreateFamilyResponseDTO;
-import com.bgs.market.application.family.view.dto.response.GetAllFamiliesResponseDTO;
-import com.bgs.market.application.family.view.dto.response.GetFamilyByIdResponseDTO;
-import com.bgs.market.application.family.view.dto.response.UpdateFamilyResponseDTO;
+import com.bgs.market.application.family.view.dto.response.*;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -69,5 +66,10 @@ public class FamilyController {
     public UpdateFamilyResponseDTO updateFamilyResponseDTO(@PathVariable("familyId") Long familyId,
                                                            @Valid @RequestBody UpdateFamilyRequestDTO request) throws Exception {
         return FamilyService.updateFamily(request, familyId);
+    }
+
+    @GetMapping("category/{categoryId}")
+    public GetAllFamiliesByCategoryIdResponseDTO getAllFamiliesByCategoryId(@PathVariable("categoryId")Long categoryId) throws Exception{
+        return FamilyService.getFamiliesByCategoryId(categoryId);
     }
 }
